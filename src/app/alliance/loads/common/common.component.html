@@ -1,0 +1,309 @@
+<div class="card mb-5 mb-xl-8">
+  <div class="card-header border-0 pt-5">
+    <h3 class="card-title align-items-start flex-column">
+      <span class="card-label fw-bolder fs-3 mb-1">{{heading}} Loads</span>
+    </h3>
+    <div class="card-toolbar">
+      <div>
+        <button
+          type="button"
+          class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
+          data-kt-menu-trigger="click"
+          data-kt-menu-placement="bottom-end"
+          data-kt-menu-flip="top-end"
+        >
+         <span
+           [inlineSVG]="'./assets/media/icons/duotune/general/gen024.svg'"
+           class="svg-icon svg-icon-2"
+         ></span>
+        </button>
+        <app-load-listing-filter-menu (listenFilterSubmit)="filterSubmit($event)" (listenResetFilter)="resetFilter()" ></app-load-listing-filter-menu>
+      </div>
+      &nbsp;&nbsp;&nbsp;
+      <a href="javascript:void(0)" class="btn btn-sm btn-light-primary" (click)="open(mymodal)">
+      <span
+        [inlineSVG]="'./assets/media/icons/duotune/arrows/arr075.svg'"
+        class="svg-icon svg-icon-3"
+      ></span>
+        Create
+      </a>
+    </div>
+  </div>
+  <div class="card-body py-3 loads-view">
+    <div class="table-responsive">
+      <table class="table align-middle gs-0 gy-4">
+        <thead>
+        <tr class="fw-bolder text-muted bg-light">
+          <th class="ps-4 min-w-300px rounded-start">LOAD#</th>
+          <th class="min-w-200px">CUSTOMER</th>
+          <th class="min-w-200px">ROUTE</th>
+          <th class="min-w-100px">LOAD STATUS</th>
+          <!--<th class="min-w-100px" *ngIf="status === 'tender'">DRIVER INTEREST</th>-->
+          <th class="min-w-200px text-end">ACTIONS&nbsp;&nbsp;&nbsp;&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let load of loads">
+          <td>
+            <!--<pre>{{load | json}}</pre>-->
+            <div class="d-flex align-items-center">
+              <div class="d-flex justify-content-start flex-column">
+                <span class="load-blue-color text-uppercase font-weight-bold">{{load?.code}}</span>
+                <span class="load-black-color text-capitalize">Procode: {{load?.proCode}}</span>
+<!-- <span class="badge badge-light-success text-uppercase">Procode: {{load?.proCode}}</span>-->
+              </div>
+            </div>
+            <div>
+              <span class="load-grey-color text-capitalize">{{load?.createdAtDateTime | date:'medium'}}</span>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="d-flex justify-content-start flex-column">
+                <span class="load-black-color text-uppercase">{{load?.customer?.location?.name}}</span>
+                <span class="load-grey-color text-lowercase">{{load?.customer?.location?.phone}}</span>
+                <span class="load-grey-color text-lowercase">{{load?.customer?.email}}</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="d-flex justify-content-start flex-column">
+                <span class="load-black-color">{{beautifyAddress(load?.origin)}}</span>
+                <span class="load-black-color">{{beautifyAddress(load?.destination)}}</span>
+                <span class="load-blue-color">View Route</span>
+              </div>
+            </div>
+            <!--{{load?.shipperRef}}-->
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="d-flex justify-content-start flex-column">
+                <span class="badge badge-light-success text-uppercase">{{load?.status}}</span>
+              </div>
+              <div *ngIf="load?.status === 'tender'" class="d-flex justify-content-start flex-column">
+                <ng-container>&nbsp;&nbsp;</ng-container>
+              </div>
+              <div *ngIf="load?.status === 'tender'" class="d-flex justify-content-start flex-column">
+                <span class="badge badge-light-success text-uppercase">{{load?.driverInterests?.length}}</span>
+              </div>
+            </div>
+          </td>
+<!--          <td *ngIf="status === 'tender'">-->
+<!--            <div class="d-flex align-items-center">-->
+<!--              <div class="d-flex justify-content-start flex-column">-->
+<!--                <span class="badge badge-light-success text-uppercase">{{load?.driverInterests?.length}}</span>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </td>-->
+          <td class="text-end">
+            <a
+              href="javascript:void(0)"
+              class="
+                btn btn-icon btn-bg-light btn-active-color-primary btn-sm
+                me-1
+              "
+              routerLink="{{'/loads/'+pageSlug+'/'+load?.id}}"
+            >
+              <span
+                [inlineSVG]="'./assets/media/icons/duotune/general/gen019.svg'"
+                class="svg-icon svg-icon-3"
+              ></span>
+            </a>
+            <a
+              href="javascript:void(0)"
+              class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+              (click)="deleteProfile(load)"
+            >
+            <span
+              [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+              class="svg-icon svg-icon-3"
+            ></span>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-flex flex-stack flex-wrap pt-10">
+      <div class="fs-6 fw-bold text-gray-700">Showing
+        {{(page === 1 ) ? page : (((page * limit) - limit) + 1)}} to {{((limit*page) > totalResults) ? totalResults : (limit*page) }}
+        of {{totalResults}} entries</div>
+      <ul class="pagination">
+        <li class="page-item previous" *ngIf="totalPages >= page && totalPages > 1 && page > 1">
+          <a class="page-link cursor-pointer">
+            <i class="previous"  (click)="paginationClicked(page - 1)"></i>
+          </a>
+        </li>
+        <li *ngFor="let pageNum of totalPagesArray" class="page-item" [ngClass]="pageNum === page ? 'active':''">
+          <a class="page-link cursor-pointer"  (click)="paginationClicked(pageNum)"> {{pageNum}} </a>
+        </li>
+        <li class="page-item next" *ngIf="page < totalPages && totalPages > 1">
+          <a class="page-link cursor-pointer">
+            <i class="next" (click)="paginationClicked(page + 1)"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<ng-template #mymodal let-modal>
+  <form
+    [formGroup]="createFormGroup"
+    (ngSubmit)="submit()"
+  >
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Create Load</h4>
+      <i class="bi bi-x fs-5 close" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <!--<div class="mb-3 row">
+              <label for="Customer" class="col-sm-4 col-form-label">Customer*</label>
+              <div class="col-sm-8">
+                <select formControlName="customer" id="Customer" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" (change)="onCustomerChange($event)">
+                  <option selected value="">Customer</option>
+                  <option *ngFor="let customer of customers" value="{{customer?.id}}" class="text-capitalize">{{customer?.location?.name}}</option>
+                </select>
+              </div>
+            </div>-->
+            <div class="mb-3 row">
+              <label for="customer" class="col-sm-4 col-form-label">Customer*</label>
+              <div class="col-sm-8">
+                <ng-select
+                  (change)="onCustomerChange($event)"
+                  bindLabel="location.name"
+                  placeholder="Select customer"
+                  appendTo="body"
+                  [multiple]="false"
+                  [searchable]="true"
+                  [clearable]="true"
+                  formControlName="customer"
+                  id="customer"
+                >
+                  <ng-option [value]="customer.id" [disabled]="customer.disabled" *ngFor="let customer of customers">
+                    {{customer?.location?.name}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="bolHash" class="col-sm-4 col-form-label">BOL #*</label>
+              <div class="col-sm-8">
+                <input formControlName="bolHash" type="text" class="form-control" id="bolHash">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Code" class="col-sm-4 col-form-label">Procode*</label>
+              <div class="col-sm-8">
+                <input formControlName="proCode" type="text" class="form-control" id="Code">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="poHash" class="col-sm-4 col-form-label">PO #*</label>
+              <div class="col-sm-8">
+                <input formControlName="poHash" type="text" class="form-control" id="poHash">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="shipperRef" class="col-sm-4 col-form-label">Shipper Ref*</label>
+              <div class="col-sm-8">
+                <input formControlName="shipperRef" type="text" class="form-control" id="shipperRef">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <!--<div class="mb-3 row grey-box">
+              <label for="origin" class="col-sm-12 col-form-label">Origin*</label>
+              <div class="col-sm-12">
+                <select formControlName="origin" id="origin" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" (change)="onOriginShipperChange($event)">
+                  <option selected value="">Origin</option>
+                  <option *ngFor="let originShipper of originShippers" value="{{originShipper?.id}}" class="text-capitalize">{{originShipper?.location?.name}}</option>
+                </select>
+              </div>
+              <p class="grey-box-address">{{originShipperAddress}}</p>
+            </div>-->
+            <div class="mb-3 row grey-box">
+              <label for="origin" class="col-sm-4 col-form-label">Origin*</label>
+              <div class="col-sm-12">
+                <ng-select
+                  (change)="onOriginShipperChange($event)"
+                  bindLabel="location.name"
+                  placeholder="Select origin"
+                  appendTo="body"
+                  [multiple]="false"
+                  [searchable]="true"
+                  [clearable]="true"
+                  formControlName="origin"
+                  id="origin"
+                >
+                  <ng-option [value]="originShipper.id" [disabled]="originShipper.disabled" *ngFor="let originShipper of originShippers">
+                    {{originShipper?.location?.name}}
+                  </ng-option>
+                </ng-select>
+              </div>
+              <p class="grey-box-address">{{originShipperAddress}}</p>
+            </div>
+          </div>
+          <div class="col">
+            <!--<div class="mb-3 row grey-box">
+              <label for="destination" class="col-sm-12 col-form-label">Destination*</label>
+              <div class="col-sm-12">
+                <select formControlName="destination" id="destination" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" (change)="onDestinationChange($event)">
+                  <option selected value="">Destination</option>
+                  <option *ngFor="let customerDestination of customerDestinations" value="{{customerDestination?.id}}" class="text-capitalize">{{customerDestination?.location?.name}}</option>
+                </select>
+              </div>
+              <p class="grey-box-address">{{customerDestinationAddress}}</p>
+            </div>-->
+            <div class="mb-3 row grey-box">
+              <label for="destination" class="col-sm-4 col-form-label">Destination*</label>
+              <div class="col-sm-12">
+                <ng-select
+                  (change)="onDestinationChange($event)"
+                  bindLabel="location.name"
+                  placeholder="Select destination"
+                  appendTo="body"
+                  [multiple]="false"
+                  [searchable]="true"
+                  [clearable]="true"
+                  formControlName="destination"
+                  id="destination"
+                >
+                  <ng-option [value]="customerDestination.id" [disabled]="customerDestination.disabled" *ngFor="let customerDestination of customerDestinations">
+                    {{customerDestination?.location?.name}}
+                  </ng-option>
+                </ng-select>
+              </div>
+              <p class="grey-box-address">{{customerDestinationAddress}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark btn btn-light" (click)="modal.close('Save click')">Cancel</button>
+      <button type="submit" class="btn btn-outline-dark btn btn-primary" [disabled]="createFormGroup.invalid">Save</button>
+    </div>
+  </form>
+</ng-template>

@@ -1,0 +1,1054 @@
+<div class="card mb-5 mb-xl-8 detail-page">
+  <!-- begin::Header -->
+  <div class="card-header border-0 pt-5">
+    <h1 class="card-title align-items-start flex-column">
+      <span class="card-label fw-bolder fs-3 mb-1">{{(pageSlug !== '' && pageSlug !== undefined) ? (pageSlug.charAt(0).toUpperCase() + pageSlug.slice(1, -1).replace('-', ' ')) : ''}} Details</span>
+    </h1>
+  </div>
+  <!-- end::Header -->
+  <!-- begin::Body -->
+  <div *ngIf="product !== {}" class="card-body py-3">
+    <!-- begin::Header -->
+    <div class="d-flex align-items-center mb-5">
+      <!-- begin::User -->
+      <div class="d-flex align-items-left flex-grow-1 flex-column">
+        <!-- begin::Info -->
+        <div class="d-flex flex-column subh-1">
+          <a href="javascript:void(0)" class="text-gray-400 text-hover-primary fs-6 fw-bolder">
+            {{product?.code}}
+          </a>
+        </div>
+        <div class="d-flex flex-row">
+          <span *ngIf="product?.active;else inactiveBadge" class="badge badge-light-success subh-tag-active">Active</span>
+          <ng-template #inactiveBadge>
+            <span class="badge badge-light-danger subh-tag-inactive">Inactive</span>
+          </ng-template>
+          <span class="text-gray-400 fw-bold subh-2">{{product?.location?.name}}</span>
+        </div>
+        <div class="d-flex flex-row subh-1">
+          <a href="javascript:void(0)" class="text-gray-400 text-hover-primary fs-6 fw-bolder">
+            {{product?.location?.id}}
+          </a>
+        </div>
+        <!-- end::Info -->
+      </div>
+      <!-- end::User -->
+      <!-- begin::Menu -->
+      <div class="my-0">
+        <button
+          class="btn btn-primary alliance-blue-button"
+          type="button"
+          data-kt-element="send"
+          (click)="open(editDetailTypeModal)"
+        >
+          Edit
+        </button>
+        &nbsp;<!--&nbsp;&nbsp;
+        <button
+          class="btn btn-sm btn-icon btn-active-light-primary"
+          data-kt-menu-trigger="click"
+          data-kt-menu-placement="bottom-end"
+          data-kt-menu-flip="top-end"
+        >
+          <i class="bi bi-three-dots fs-2"></i>
+        </button>-->
+        <!--<app-dropdown-menu1></app-dropdown-menu1>-->
+      </div>
+      <!-- end::Menu -->
+    </div>
+    <!-- end::Header -->
+    <div class="separator border-gray-200  mb-5 mt-5"></div>
+    <div class="d-flex flex-row pd-f-size font-weight-bold">
+      <div class="d-flex flex-column flex-grow-2">
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Address</p>
+            <p class="d-flex flex-grow-1-custom">
+              <span>
+                <span class="text-capitalize">{{product?.location?.address1}}</span>
+                <span class="text-capitalize">{{((product?.location?.address1 && product?.location?.country && product?.location?.country !== undefined) ? ', '+product?.location?.country?.name:'')}}</span>
+                <span class="text-capitalize">{{(((product?.location?.address1 || product?.location?.country) && product?.location?.city && product?.location?.city !== undefined) ? ', '+product?.location?.city?.name:'')}}</span>
+                <span class="text-capitalize">{{(((product?.location?.address1 || product?.location?.country ||product?.location?.city) && product?.location?.state && product?.location?.state !== undefined) ? ', '+product?.location?.state?.name:'')}}</span>
+                <span class="text-uppercase">{{(((product?.location?.address1 || product?.location?.country || product?.location?.city|| product?.location?.state) && product?.location?.zip && product?.location?.zip !== undefined) ? ', '+product?.location?.zip:'')}}</span>
+              </span>
+            </p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Phone</p>
+            <p class="d-flex flex-grow-1-custom">{{product?.location?.phone}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Fax</p>
+            <p class="d-flex flex-grow-1-custom">{{product?.location?.fax}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Email</p>
+            <p class="d-flex flex-grow-1-custom">{{product?.email}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Sales Person</p>
+            <p class="d-flex flex-grow-1-custom text-uppercase">{{user?.name}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-column flex-grow-2">
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">External ID</p>
+            <p class="d-flex flex-grow-1-custom text-uppercase">{{product?.location?.externalId}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">MC ID</p>
+            <p class="d-flex flex-grow-1-custom text-uppercase">{{product?.mcId}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">EDI ID</p>
+            <p class="d-flex flex-grow-1-custom text-uppercase">{{product?.ediId}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Office Hours</p>
+            <p class="d-flex flex-grow-1-custom">{{product?.officeHours}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-column flex-grow-1 is-icons">
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1 align-items-end align-content-end">
+            <p class="d-flex flex-row" [ngClass]="((product?.isCustomer) ? 'icon-green-tick' : 'icon-red-cross')">
+              <i *ngIf="product?.isCustomer;else noGoToElse" class="bi bi-check fs-5"></i>
+              <ng-template #noGoToElse>
+                <i class="bi bi-x fs-5"></i>
+              </ng-template>
+            </p>
+            <p class="d-flex flex-grow-1-custom">Customer</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1 align-items-end align-content-end">
+            <p class="d-flex flex-row" [ngClass]="((product?.isBillTo) ? 'icon-green-tick' : 'icon-red-cross')">
+              <i *ngIf="product?.isBillTo;else noGoToElse" class="bi bi-check fs-5"></i>
+              <ng-template #noGoToElse>
+                <i class="bi bi-x fs-5"></i>
+              </ng-template>
+            </p>
+            <p class="d-flex flex-grow-1-custom">Bill To</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1 align-items-end align-content-end">
+            <p class="d-flex flex-row" [ngClass]="((product?.isShipper) ? 'icon-green-tick' : 'icon-red-cross')">
+              <i *ngIf="product?.isShipper;else noGoToElse" class="bi bi-check fs-5"></i>
+              <ng-template #noGoToElse>
+                <i class="bi bi-x fs-5"></i>
+              </ng-template>
+            </p>
+            <p class="d-flex flex-grow-1-custom">Shipper</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1 align-items-end align-content-end">
+            <p class="d-flex flex-row" [ngClass]="((product?.isConsignee) ? 'icon-green-tick' : 'icon-red-cross')">
+              <i *ngIf="product?.isConsignee;else noGoToElse" class="bi bi-check fs-5"></i>
+              <ng-template #noGoToElse>
+                <i class="bi bi-x fs-5"></i>
+              </ng-template>
+            </p>
+            <p class="d-flex flex-grow-1-custom">Consignee</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1 align-items-end align-content-end">
+            <p class="d-flex flex-row" [ngClass]="((product?.isBroker) ? 'icon-green-tick' : 'icon-red-cross')">
+              <i *ngIf="product?.isBroker;else noGoToElse" class="bi bi-check fs-5"></i>
+              <ng-template #noGoToElse>
+                <i class="bi bi-x fs-5"></i>
+              </ng-template>
+            </p>
+            <p class="d-flex flex-grow-1-custom">Broker</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1 align-items-end align-content-end">
+            <p class="d-flex flex-row" [ngClass]="((product?.isForwarder) ? 'icon-green-tick' : 'icon-red-cross')">
+              <i *ngIf="product?.isForwarder;else noGoToElse" class="bi bi-check fs-5"></i>
+              <ng-template #noGoToElse>
+                <i class="bi bi-x fs-5"></i>
+              </ng-template>
+            </p>
+            <p class="d-flex flex-grow-1-custom">Forwarder</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1 align-items-end align-content-end">
+            <p class="d-flex flex-row" [ngClass]="((product?.isTerminal) ? 'icon-green-tick' : 'icon-red-cross')">
+              <i *ngIf="product?.isTerminal;else noGoToElse" class="bi bi-check fs-5"></i>
+              <ng-template #noGoToElse>
+                <i class="bi bi-x fs-5"></i>
+              </ng-template>
+            </p>
+            <p class="d-flex flex-grow-1-custom">Terminal</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="separator border-gray-200  mb-5 mt-5"></div>
+    <div class="d-flex flex-row pd-f-size font-weight-bold">
+      <div class="d-flex flex-column flex-grow-1">
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-notes">Notes</p>
+            <p class="d-flex flex-grow-1-notes-details">{{product?.notes}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body py-3">
+    <mat-tab-group animationDuration="0ms">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="tab-header-style">
+            Contact Persons
+          </span>
+        </ng-template>
+        <ng-template matTabContent>
+          <!-- begin::Body -->
+          <div class="card-body py-3 padding-zero">
+            <!-- begin::Table container -->
+            <div class="table-responsive">
+              <!-- begin::Table -->
+              <table class="table align-middle gs-0 gy-4">
+                <!-- begin::Table head -->
+                <thead>
+                <tr class="fw-bolder text-muted bg-light">
+                  <th class="ps-4 min-w-300px rounded-start">Contact Person</th>
+                  <th class="min-w-125px">Type</th>
+                  <th class="min-w-125px">Phone</th>
+                  <th class="min-w-200px">Fax</th>
+                  <th class="min-w-150px">Email</th>
+                  <th class="min-w-200px text-end rounded-end">
+                    <button
+                      class="btn btn-primary alliance-blue-button"
+                      type="button"
+                      data-kt-element="send"
+                      (click)="open(createContactPersonModal)"
+                    >
+                      Create
+                    </button>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="javascript:void(0)" class="btn btn-sm btn-light-primary a-svg-hover-fill-color" (click)="export()">
+                        <span
+                          class="svg-icon svg-icon-3"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                              <rect x="0" y="0" width="24" height="24"/>
+                              <path class="svg-hover-fill-color" d="M17,8 C16.4477153,8 16,7.55228475 16,7 C16,6.44771525 16.4477153,6 17,6 L18,6 C20.209139,6 22,7.790861 22,10 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 L2,9.99305689 C2,7.7839179 3.790861,5.99305689 6,5.99305689 L7.00000482,5.99305689 C7.55228957,5.99305689 8.00000482,6.44077214 8.00000482,6.99305689 C8.00000482,7.54534164 7.55228957,7.99305689 7.00000482,7.99305689 L6,7.99305689 C4.8954305,7.99305689 4,8.88848739 4,9.99305689 L4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,10 C20,8.8954305 19.1045695,8 18,8 L17,8 Z" fill="#009EF7" fill-rule="nonzero" opacity="1"/>
+                              <rect class="svg-hover-fill-color" fill="#009EF7" opacity="1" transform="translate(12.000000, 8.000000) scale(1, -1) rotate(-180.000000) translate(-12.000000, -8.000000) " x="11" y="2" width="2" height="12" rx="1"/>
+                              <path class="svg-hover-fill-color" d="M12,2.58578644 L14.2928932,0.292893219 C14.6834175,-0.0976310729 15.3165825,-0.0976310729 15.7071068,0.292893219 C16.0976311,0.683417511 16.0976311,1.31658249 15.7071068,1.70710678 L12.7071068,4.70710678 C12.3165825,5.09763107 11.6834175,5.09763107 11.2928932,4.70710678 L8.29289322,1.70710678 C7.90236893,1.31658249 7.90236893,0.683417511 8.29289322,0.292893219 C8.68341751,-0.0976310729 9.31658249,-0.0976310729 9.70710678,0.292893219 L12,2.58578644 Z" fill="#009EF7" fill-rule="nonzero" transform="translate(12.000000, 2.500000) scale(1, -1) translate(-12.000000, -2.500000) "/>
+                            </g>
+                          </svg>
+                        </span>
+                      Export
+                    </a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a [href]="'./assets/alliance/download-import-samples/contact-persons-import-sample.csv'" class="btn btn-sm btn-light-primary a-svg-hover-fill-color">
+                      <span class="svg-icon svg-icon-primary svg-icon-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="17px" height="17px" viewBox="0 0 24 24" version="1.1">
+                          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                              <rect x="0" y="0" width="24" height="24"/>
+                              <rect class="svg-hover-fill-color" fill="#009EF7" opacity="1" transform="translate(12.000000, 7.000000) rotate(-180.000000) translate(-12.000000, -7.000000) " x="11" y="1" width="2" height="12" rx="1"/>
+                              <path class="svg-hover-fill-color" d="M17,8 C16.4477153,8 16,7.55228475 16,7 C16,6.44771525 16.4477153,6 17,6 L18,6 C20.209139,6 22,7.790861 22,10 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 L2,9.99305689 C2,7.7839179 3.790861,5.99305689 6,5.99305689 L7.00000482,5.99305689 C7.55228957,5.99305689 8.00000482,6.44077214 8.00000482,6.99305689 C8.00000482,7.54534164 7.55228957,7.99305689 7.00000482,7.99305689 L6,7.99305689 C4.8954305,7.99305689 4,8.88848739 4,9.99305689 L4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,10 C20,8.8954305 19.1045695,8 18,8 L17,8 Z" fill="#009EF7" fill-rule="nonzero" opacity="1"/>
+                              <path class="svg-hover-fill-color" d="M14.2928932,10.2928932 C14.6834175,9.90236893 15.3165825,9.90236893 15.7071068,10.2928932 C16.0976311,10.6834175 16.0976311,11.3165825 15.7071068,11.7071068 L12.7071068,14.7071068 C12.3165825,15.0976311 11.6834175,15.0976311 11.2928932,14.7071068 L8.29289322,11.7071068 C7.90236893,11.3165825 7.90236893,10.6834175 8.29289322,10.2928932 C8.68341751,9.90236893 9.31658249,9.90236893 9.70710678,10.2928932 L12,12.5857864 L14.2928932,10.2928932 Z" fill="#009EF7" fill-rule="nonzero"/>
+                          </g>
+                        </svg>
+                      </span>
+                      Sample
+                    </a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="javascript:void(0)" class="btn btn-sm btn-light-primary a-svg-hover-fill-color" (click)="csvReader.click()">
+                        <span class="svg-icon svg-icon-primary svg-icon-3">
+                          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="17px" height="17px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"/>
+                                <rect class="svg-hover-fill-color" fill="#009EF7" opacity="1" transform="translate(12.000000, 7.000000) rotate(-180.000000) translate(-12.000000, -7.000000) " x="11" y="1" width="2" height="12" rx="1"/>
+                                <path class="svg-hover-fill-color" d="M17,8 C16.4477153,8 16,7.55228475 16,7 C16,6.44771525 16.4477153,6 17,6 L18,6 C20.209139,6 22,7.790861 22,10 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 L2,9.99305689 C2,7.7839179 3.790861,5.99305689 6,5.99305689 L7.00000482,5.99305689 C7.55228957,5.99305689 8.00000482,6.44077214 8.00000482,6.99305689 C8.00000482,7.54534164 7.55228957,7.99305689 7.00000482,7.99305689 L6,7.99305689 C4.8954305,7.99305689 4,8.88848739 4,9.99305689 L4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,10 C20,8.8954305 19.1045695,8 18,8 L17,8 Z" fill="#009EF7" fill-rule="nonzero" opacity="1"/>
+                                <path class="svg-hover-fill-color" d="M14.2928932,10.2928932 C14.6834175,9.90236893 15.3165825,9.90236893 15.7071068,10.2928932 C16.0976311,10.6834175 16.0976311,11.3165825 15.7071068,11.7071068 L12.7071068,14.7071068 C12.3165825,15.0976311 11.6834175,15.0976311 11.2928932,14.7071068 L8.29289322,11.7071068 C7.90236893,11.3165825 7.90236893,10.6834175 8.29289322,10.2928932 C8.68341751,9.90236893 9.31658249,9.90236893 9.70710678,10.2928932 L12,12.5857864 L14.2928932,10.2928932 Z" fill="#009EF7" fill-rule="nonzero"/>
+                            </g>
+                          </svg>
+                        </span>
+                      Import
+                    </a>
+                    <input style="display: none" type="file" #csvReader name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event)" accept=".csv" />
+                  </th>
+                </tr>
+                </thead>
+                <!-- end::Table head -->
+                <!-- begin::Table body -->
+                <tbody *ngIf="product?.contactPersons && product?.contactPersons.length > 0">
+                <tr *ngFor="let cp of product?.contactPersons">
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="d-flex justify-content-start flex-column">
+                        <a
+                          href="javascript:void(0)"
+                          class="text-dark fw-bolder text-hover-primary mb-1 fs-6 text-capitalize"
+                        >
+                          {{cp.name}}
+                        </a>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-start flex-column">
+                      <a
+                        href="javascript:void(0)"
+                        class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 text-capitalize"
+                      >
+                        {{cp.type}}
+                      </a>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-start flex-column">
+                      <a
+                        href="javascript:void(0)"
+                        class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 text-lowercase"
+                      >
+                        {{cp.phone}}
+                      </a>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-start flex-column">
+                      <a
+                        href="javascript:void(0)"
+                        class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 text-lowercase"
+                      >
+                        {{cp.fax}}
+                      </a>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-start flex-column">
+                      <a
+                        href="javascript:void(0)"
+                        class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 text-lowercase"
+                      >
+                        {{cp.email}}
+                      </a>
+                    </div>
+                  </td>
+                  <td class="text-end">
+                    <a
+                      href="javascript:void(0)"
+                      class="
+                          btn btn-icon btn-bg-light btn-active-color-primary btn-sm
+                          me-1
+                        "
+                      (click)="fillContactPersonEditForm(cp); open(editContactPersonModal)"
+                    >
+                        <span
+                          [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                          class="svg-icon svg-icon-3"
+                        ></span>
+                    </a>
+                    <a
+                      href="javascript:void(0)"
+                      class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                      (click)="deleteContactPerson(cp)"
+                    >
+                        <span
+                          [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+                          class="svg-icon svg-icon-3"
+                        ></span>
+                    </a>
+                    <!--                      <a-->
+                    <!--                        href="javascript:void(0)"-->
+                    <!--                        class="-->
+                    <!--                              btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm-->
+                    <!--                              px-4-->
+                    <!--                              me-2-->
+                    <!--                            "-->
+                    <!--                        style="display: none"-->
+                    <!--                      >-->
+                    <!--                        <i class="bi bi-three-dots fs-5"></i>-->
+                    <!--                      </a>-->
+                  </td>
+                </tr>
+                </tbody>
+                <!-- end::Table body -->
+              </table>
+              <!-- end::Table -->
+            </div>
+            <!-- end::Table container -->
+          </div>
+          <!-- begin::Body -->
+        </ng-template>
+      </mat-tab>
+      <mat-tab [disabled]="true">
+        <ng-template mat-tab-label>
+          <span class="tab-header-style">
+            Charges
+          </span>
+        </ng-template>
+        <ng-template matTabContent>
+          <!-- begin::Body -->
+          <div class="card-body py-3 padding-zero">
+            <!-- begin::Table container -->
+            <div class="table-responsive">
+              <!-- begin::Table -->
+              <table class="table align-middle gs-0 gy-4">
+                <!-- begin::Table head -->
+                <thead>
+                <tr class="fw-bolder text-muted bg-light">
+                  <th class="ps-4 min-w-300px rounded-start">Contact Person</th>
+                  <th class="min-w-125px">Type</th>
+                  <th class="min-w-125px">Phone</th>
+                  <th class="min-w-200px">Fax</th>
+                  <th class="min-w-150px">Email</th>
+                  <th class="min-w-200px text-end rounded-end">
+                    <button
+                      class="btn btn-primary alliance-blue-button"
+                      type="button"
+                      data-kt-element="send"
+                    >
+                      Create
+                    </button>
+                  </th>
+                </tr>
+                </thead>
+                <!-- end::Table head -->
+                <!-- begin::Table body -->
+                <tbody>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="d-flex justify-content-start flex-column">
+                        <a
+                          href="javascript:void(0)"
+                          class="text-dark fw-bolder text-hover-primary mb-1 fs-6"
+                        >
+                          Brad Simmons
+                        </a>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-start flex-column">
+                      <a
+                        href="javascript:void(0)"
+                        class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6"
+                      >
+                        Accounting
+                      </a>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-start flex-column">
+                      <a
+                        href="javascript:void(0)"
+                        class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6"
+                      >
+                        (940) 872-7900
+                      </a>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-start flex-column">
+                      <a
+                        href="javascript:void(0)"
+                        class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6"
+                      >
+                        (940) 872-7900
+                      </a>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-start flex-column">
+                      <a
+                        href="javascript:void(0)"
+                        class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6"
+                      >
+                        username@company.com
+                      </a>
+                    </div>
+                  </td>
+                  <td class="text-end">
+                    <a
+                      href="javascript:void(0)"
+                      class="
+                              btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm
+                              px-4
+                              me-2
+                            "
+                    >
+                      <i class="bi bi-three-dots fs-5"></i>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+                <!-- end::Table body -->
+              </table>
+              <!-- end::Table -->
+            </div>
+            <!-- end::Table container -->
+          </div>
+          <!-- begin::Body -->
+        </ng-template>
+      </mat-tab>
+      <mat-tab [disabled]="true">
+        <ng-template mat-tab-label>
+          <span class="tab-header-style">
+            Order History
+          </span>
+        </ng-template>
+        <ng-template matTabContent>
+          <!-- begin::Body -->
+          <div class="card-body py-3 padding-zero">
+            <!-- begin::Table container -->
+            <div class="table-responsive">
+              <!-- begin::Table -->
+              <table class="table align-middle gs-0 gy-4">
+                <!-- begin::Table head -->
+                <thead>
+                <tr class="fw-bolder text-muted bg-light">
+                  <th class="ps-4 min-w-300px rounded-start">Contact Person</th>
+                  <th class="min-w-125px">Type</th>
+                  <th class="min-w-125px">Phone</th>
+                  <th class="min-w-200px">Fax</th>
+                  <th class="min-w-150px">Email</th>
+                  <th class="min-w-200px text-end rounded-end">
+                    <button
+                      class="btn btn-primary alliance-blue-button"
+                      type="button"
+                      data-kt-element="send"
+                    >
+                      Create
+                    </button>
+                  </th>
+                </tr>
+                </thead>
+                <!-- end::Table head -->
+                <!-- begin::Table body -->
+                <tbody>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="d-flex justify-content-start flex-column">
+                        <a
+                          href="javascript:void(0)"
+                          class="text-dark fw-bolder text-hover-primary mb-1 fs-6"
+                        >
+                          Brad Simmons
+                        </a>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-start flex-column">
+                      <a
+                        href="javascript:void(0)"
+                        class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6"
+                      >
+                        Accounting
+                      </a>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-start flex-column">
+                      <a
+                        href="javascript:void(0)"
+                        class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6"
+                      >
+                        (940) 872-7900
+                      </a>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-start flex-column">
+                      <a
+                        href="javascript:void(0)"
+                        class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6"
+                      >
+                        (940) 872-7900
+                      </a>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-start flex-column">
+                      <a
+                        href="javascript:void(0)"
+                        class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6"
+                      >
+                        username@company.com
+                      </a>
+                    </div>
+                  </td>
+                  <td class="text-end">
+                    <a
+                      href="javascript:void(0)"
+                      class="
+                            btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm
+                            px-4
+                            me-2
+                          "
+                    >
+                      <i class="bi bi-three-dots fs-5"></i>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+                <!-- end::Table body -->
+              </table>
+              <!-- end::Table -->
+            </div>
+            <!-- end::Table container -->
+          </div>
+          <!-- begin::Body -->
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <style>
+    ::ng-deep .mat-ripple-element{
+      display: none !important;
+    }
+    ::ng-deep div#mat-tab-label-0-0,
+    ::ng-deep div#mat-tab-label-0-1,
+    ::ng-deep div#mat-tab-label-0-2
+    {
+      margin: 0 !important;
+      padding: 0 !important;
+      max-width: 130px !important;
+      min-width: 130px !important;
+    }
+    ::ng-deep .mat-ripple-element,
+    ::ng-deep .mat-tab-label-content
+    {
+      max-width: 130px !important;
+      min-width: 130px !important;
+    }
+    ::ng-deep .tab-header-style{
+      font-size: 16px;
+      color: #009EF7;
+    }
+    ::ng-deep .mat-tab-label {
+      border-bottom: 2px solid #FFF;
+    }
+    ::ng-deep .mat-tab-label-active {
+      opacity: 1 !important;
+      border-bottom: 2px solid #009EF7;
+    }
+    ::ng-deep mat-tab-body .mat-tab-body-content{
+      padding: 15px 0;
+    }
+  </style>
+  <!-- end::Body -->
+</div>
+<ng-template #editDetailTypeModal let-modal>
+  <form
+    [formGroup]="editFormGroup"
+    (ngSubmit)="update()"
+  >
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Edit {{(pageSlug !== '' && pageSlug !== undefined) ? (pageSlug.charAt(0).toUpperCase() + pageSlug.slice(1, -1).replace('-', ' ')) : ''}} Profile</h4>
+      <i class="bi bi-x fs-5 close" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="CodeCode" class="col-sm-2 col-form-label">Code</label>
+              <div class="col-sm-10">
+                <input formControlName="code" type="text" class="form-control" id="CodeCode" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-check form-switch">
+              <label class="form-check-label" for="active">Active</label>
+              <input formControlName="active" class="form-check-input" type="checkbox" id="active" checked>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Code" class="col-sm-2 col-form-label">Location Id*</label>
+              <div class="col-sm-10">
+                <input formControlName="locationId" type="text" class="form-control" id="Code">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="userId" class="col-sm-2 col-form-label">Sales Person</label>
+              <div class="col-sm-10">
+                <select formControlName="userId" id="userId" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>Sales Person</option>
+                  <option *ngFor="let user of users" value="{{user?.id}}">{{user?.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="name" class="col-sm-2 col-form-label">Name*</label>
+              <div class="col-sm-10">
+                <input formControlName="locationName" type="text" class="form-control" id="name">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Address" class="col-sm-2 col-form-label">Address*</label>
+              <div class="col-sm-10">
+                <input formControlName="locationAddress1" type="text" class="form-control" id="Address">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Zip" class="col-sm-2 col-form-label">Zip*</label>
+              <div class="col-sm-10">
+                <input formControlName="locationZip" type="text" class="form-control" id="Zip">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Country" class="col-sm-2 col-form-label">Country*</label>
+              <div class="col-sm-10">
+                <select (change)="onCountryChange($event)" formControlName="locationCountry" id="Country" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>Country</option>
+                  <option [value]="country._id" *ngFor="let country of countries">{{country.name}} ({{country.isoCode}})</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="State" class="col-sm-2 col-form-label">State*</label>
+              <div class="col-sm-10">
+                <select (change)="onStateChange($event)" formControlName="locationState" id="State" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>State</option>
+                  <option [value]="state._id" *ngFor="let state of states">{{state.name}} ({{state.isoCode}})</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="City" class="col-sm-2 col-form-label">City*</label>
+              <div class="col-sm-10">
+                <select formControlName="locationCity" id="City" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>City</option>
+                  <option [value]="city._id" *ngFor="let city of cities">{{city.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Phone" class="col-sm-2 col-form-label">Phone*</label>
+              <div class="col-sm-10">
+                <input formControlName="locationPhone" type="text" class="form-control" id="Phone" [imask]="{mask: '(000) 0000-0000'}">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Fax" class="col-sm-2 col-form-label">Fax</label>
+              <div class="col-sm-10">
+                <input formControlName="locationFax" type="text" class="form-control" id="Fax" [imask]="{mask: '(000) 0000-0000'}">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="ExternalID" class="col-sm-2 col-form-label">External ID*</label>
+              <div class="col-sm-10">
+                <input formControlName="locationExternalId" type="text" class="form-control" id="ExternalID">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="email" class="col-sm-2 col-form-label">Email</label>
+              <div class="col-sm-10">
+                <input formControlName="email" type="text" class="form-control" id="email">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <div class="form-check form-switch">
+              <label class="form-check-label" for="Customer">Customer</label>
+              <input formControlName="isCustomer" class="form-check-input" type="checkbox" id="Customer">
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-check form-switch">
+              <label class="form-check-label" for="BillTo">BillTo</label>
+              <input formControlName="isBillTo" class="form-check-input" type="checkbox" id="BillTo">
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-check form-switch">
+              <label class="form-check-label" for="Consignee">Consignee</label>
+              <input formControlName="isConsignee" class="form-check-input" type="checkbox" id="Consignee">
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-check form-switch">
+              <label class="form-check-label" for="Shipper">Shipper</label>
+              <input formControlName="isShipper" class="form-check-input" type="checkbox" id="Shipper">
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <div class="form-check form-switch">
+              <label class="form-check-label" for="Broker">Broker</label>
+              <input formControlName="isBroker" class="form-check-input" type="checkbox" id="Broker">
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-check form-switch">
+              <label class="form-check-label" for="Forwarder">Forwarder</label>
+              <input formControlName="isForwarder" class="form-check-input" type="checkbox" id="Forwarder">
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-check form-switch">
+              <label class="form-check-label" for="Terminal">Terminal</label>
+              <input formControlName="isTerminal" class="form-check-input" type="checkbox" id="Terminal">
+            </div>
+          </div>
+          <div class="col">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="mcId" class="col-sm-2 col-form-label">MC ID</label>
+              <div class="col-sm-10">
+                <input formControlName="mcId" type="text" class="form-control" id="mcId">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="ediId" class="col-sm-2 col-form-label">EDI ID</label>
+              <div class="col-sm-10">
+                <input formControlName="ediId" type="text" class="form-control" id="ediId">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="officeHours" class="col-sm-2 col-form-label">Office Hours</label>
+              <div class="col-sm-10">
+                <input formControlName="officeHours" type="text" class="form-control" id="officeHours">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="notes" class="col-sm-2 col-form-label">Notes</label>
+              <div class="col-sm-10">
+                <textarea formControlName="notes" class="form-control" id="notes"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark btn btn-light" (click)="modal.close('Save click')">Cancel</button>
+      <button type="submit" class="btn btn-outline-dark btn btn-primary" [disabled]="editFormGroup.invalid">Update</button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #createContactPersonModal let-modal>
+  <form
+    [formGroup]="createContactFormGroup"
+    (ngSubmit)="update()"
+  >
+    <div class="modal-header">
+      <h4 class="modal-title" id="create-contact-prson">Create Contact Person</h4>
+      <i class="bi bi-x fs-5 close" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="ContactPerson" class="col-sm-2 col-form-label">Contact Person*</label>
+              <div class="col-sm-10">
+                <input formControlName="contactPerson" type="text" class="form-control" id="ContactPerson">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="ContactType" class="col-sm-2 col-form-label">Type*</label>
+              <div class="col-sm-10">
+                <select formControlName="contactType" id="ContactType" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>Type</option>
+                  <option value="accounting">Accounting</option>
+                  <option value="purchasing">Purchasing</option>
+                  <option value="sales">Sales</option>
+                  <option value="transportation">Transportation</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="ContactPhone" class="col-sm-2 col-form-label">Phone*</label>
+              <div class="col-sm-10">
+                <input formControlName="contactPhone" type="text" class="form-control" id="ContactPhone" [imask]="{mask: '(000) 0000-0000'}">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="ContactFax" class="col-sm-2 col-form-label">Fax*</label>
+              <div class="col-sm-10">
+                <input formControlName="contactFax" type="text" class="form-control" id="ContactFax" [imask]="{mask: '(000) 0000-0000'}">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="ContactEmail" class="col-sm-2 col-form-label">Email*</label>
+              <div class="col-sm-10">
+                <input formControlName="contactEmail" type="text" class="form-control" id="ContactEmail">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark btn btn-light" (click)="modal.close('Save click')">Cancel</button>
+      <button type="submit" class="btn btn-outline-dark btn btn-primary" [disabled]="createContactFormGroup.invalid">Create</button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #editContactPersonModal let-modal>
+  <form
+    [formGroup]="editContactFormGroup"
+    (ngSubmit)="updateContactPerson()"
+  >
+    <div class="modal-header">
+      <h4 class="modal-title" id="edit-contact-prson">Edit Contact Person</h4>
+      <i class="bi bi-x fs-5 close" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditContactPerson" class="col-sm-2 col-form-label">Contact Person*</label>
+              <div class="col-sm-10">
+                <input formControlName="contactPersonId" type="hidden" class="form-control" id="EditContactPersonId">
+                <input formControlName="contactPerson" type="text" class="form-control" id="EditContactPerson">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditContactType" class="col-sm-2 col-form-label">Type*</label>
+              <div class="col-sm-10">
+                <select formControlName="contactType" id="EditContactType" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>Type</option>
+                  <option value="accounting">Accounting</option>
+                  <option value="purchasing">Purchasing</option>
+                  <option value="sales">Sales</option>
+                  <option value="transportation">Transportation</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditContactPhone" class="col-sm-2 col-form-label">Phone*</label>
+              <div class="col-sm-10">
+                <input formControlName="contactPhone" type="text" class="form-control" id="EditContactPhone">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditContactFax" class="col-sm-2 col-form-label">Fax*</label>
+              <div class="col-sm-10">
+                <input formControlName="contactFax" type="text" class="form-control" id="EditContactFax" [imask]="{mask: '(000) 0000-0000'}">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditContactEmail" class="col-sm-2 col-form-label">Email*</label>
+              <div class="col-sm-10">
+                <input formControlName="contactEmail" type="text" class="form-control" id="EditContactEmail">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark btn btn-light" (click)="modal.close('Save click')">Cancel</button>
+      <button type="submit" class="btn btn-outline-dark btn btn-primary" [disabled]="editContactFormGroup.invalid">Update</button>
+    </div>
+  </form>
+</ng-template>

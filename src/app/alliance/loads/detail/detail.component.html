@@ -1,0 +1,1409 @@
+<div class="card mb-5 mb-xl-8 detail-page">
+  <!-- begin::Header -->
+  <div class="card-header border-0 pt-5">
+    <h1 class="card-title align-items-start flex-column">
+      <span class="card-label fw-bolder fs-3 mb-1">Load Detail</span>
+    </h1>
+    <!--<pre>{{load | json}}</pre>-->
+    <!--<pre>{{user | json}}</pre>
+    <pre>{{driver | json}}</pre>-->
+  </div>
+  <!-- end::Header -->
+  <!-- begin::Body -->
+  <div *ngIf="load !== {}" class="card-body py-3">
+    <!-- begin::Header -->
+    <div class="d-flex align-items-center mb-5">
+      <!-- begin::User -->
+      <div class="d-flex align-items-left flex-grow-1 flex-column">
+        <!-- begin::Info -->
+        <div class="d-flex flex-column subh-1">
+          <a href="javascript:void(0)" class="text-gray-400 text-hover-primary fs-6 fw-bolder text-uppercase">
+            {{load?.code}}
+          </a>
+        </div>
+        <div class="d-flex flex-row">
+          <span class="badge badge-light-success subh-tag-active text-uppercase">{{load?.status}}</span>
+          <span class="text-gray-400 fw-bold subh-2">Procode: {{load?.proCode}}</span>
+        </div>
+        <!-- end::Info -->
+      </div>
+      <!-- end::User -->
+      <!-- begin::Menu -->
+      <div class="my-0">
+        <button
+          *ngIf="load?.status === 'tender'"
+          class="btn btn-primary alliance-yellow-button"
+          type="button"
+          data-kt-element="send"
+          (click)="openInterestedDrivers(invitedDriverModal)"
+          [disabled]="load?.driverInterests?.length === 0"
+        >
+          Interested Drivers ({{load?.driverInterests?.length}})
+        </button>
+        &nbsp;&nbsp;&nbsp;
+        <button
+          *ngIf="load?.status === 'pending'"
+          class="btn btn-primary alliance-yellow-button"
+          type="button"
+          data-kt-element="send"
+          (click)="tenderClicked(load)"
+        >
+          Tender
+        </button>
+        &nbsp;&nbsp;&nbsp;
+        <button
+          class="btn btn-primary alliance-blue-button"
+          type="button"
+          data-kt-element="send"
+          (click)="open(mymodal)"
+        >
+          Edit
+        </button>
+      </div>
+      <!-- end::Menu -->
+    </div>
+    <!-- end::Header -->
+    <div class="separator border-gray-200  mb-5 mt-5"></div>
+    <div class="d-flex flex-row pd-f-size font-weight-bold">
+      <div class="d-flex flex-column flex-grow-2">
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Created Date</p>
+            <p class="d-flex flex-grow-1-custom">{{load?.createdAtDateTime | date:'medium'}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Updated Date</p>
+            <p class="d-flex flex-grow-1-custom">{{load?.updatedAtDateTime | date:'medium'}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-column flex-grow-2">
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Bol #</p>
+            <p class="d-flex flex-grow-1-custom text-capitalize">{{load?.bolHash}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">PO #</p>
+            <p class="d-flex flex-grow-1-custom">{{load?.poHash}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Shipper Ref</p>
+            <p class="d-flex flex-grow-1-custom">{{load?.shipperRef}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex flex-row pd-f-size font-weight-bold">
+      <div class="d-flex flex-column flex-grow-1">
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-notes">Notes</p>
+            <p class="d-flex flex-grow-1-notes-details">{{load?.notes}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body py-3" id="loads-tab">
+    <div class="separator border-gray-200  mb-5 mt-5"></div>
+    <mat-tab-group animationDuration="0ms">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="tab-header-style">
+            Routes
+          </span>
+        </ng-template>
+        <ng-template matTabContent>
+          <div class="card-body py-3 padding-zero">
+            <div class="row no-margin no-padding">
+              <div class="col">
+                <div class="mb-3 row no-margin no-padding flex-column">
+                  <label for="Customer" class="col-sm-12 col-form-label">Driver Details</label>
+                  <div class="col-sm-12">
+                    <div class="square d-flex flex-column justify-content-center align-items-center driver-assign">
+                      <img *ngIf="load?.lastInvitedDriver?.image!==undefined&&load?.lastInvitedDriver?.image!==''&&load?.lastInvitedDriver?.image!==null" src="{{apiServerPath+load?.lastInvitedDriver?.image}}" alt="" class="img-circle img-rounded">
+                      <p *ngIf="load?.invitationSentToDriver" class="text-black text-uppercase">{{load?.lastInvitedDriver?.first_name}} {{load?.lastInvitedDriver?.last_name}}</p>
+                      <p *ngIf="load?.invitationSentToDriver" class="text-grey">{{load?.lastInvitedDriver?.mobile}}</p>
+                      <p *ngIf="load?.invitationSentToDriver" class="text-grey">{{load?.lastInvitedDriver?.phone}}</p>
+                      <p *ngIf="!load?.invitationSentToDriver && !load?.isInviteAcceptedByDriver && !load?.onTheWayToDelivery && !load?.deliveredToCustomer">No driver is assigned to this load yet.</p>
+                      <p *ngIf="load?.invitationSentToDriver && !load?.isInviteAcceptedByDriver && !load?.onTheWayToDelivery && !load?.deliveredToCustomer" class="text-orange mt-1">Driver has not accepted the invitation yet.</p>
+                      <button *ngIf="!load?.isInviteAcceptedByDriver" class="invite-driver-btn" (click)="openInviteDriver(invitedDriverModal)">Invite Driver</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <form
+                  [formGroup]="loadAssignedStatusFormGroup"
+                >
+                  <ul class="driver-assigned-status">
+                    <li>
+                      <div class="d-flex">
+                        <div class="d-flex flex-row load-statuses load-created">
+                          <div class="form-check form-check-sm form-check-custom form-check-solid">
+                            <input
+                              formControlName="loadCreated"
+                              class="form-check-input"
+                              type="checkbox"
+                              value="1"
+                              readonly
+                            />
+                          </div>
+                        </div>
+                        <div class="d-flex flex-column">
+                          <div class="d-flex label-heading">Load Created</div>
+                          <div class="d-flex label-value">{{load?.createdAtDateTime | date:'medium'}} By Donald Brown</div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="d-flex">
+                        <div class="d-flex flex-row load-statuses invitation-sent-to-driver">
+                          <div class="form-check form-check-sm form-check-custom form-check-solid">
+                            <input
+                              formControlName="invitationSentToDriver"
+                              class="form-check-input"
+                              type="checkbox"
+                              value="1"
+                              readonly
+                            />
+                          </div>
+                        </div>
+                        <div class="d-flex flex-column">
+                          <div class="d-flex label-heading">Invitation sent to driver</div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="d-flex">
+                        <div class="d-flex flex-row load-statuses accepted-by-driver">
+                          <div class="form-check form-check-sm form-check-custom form-check-solid">
+                            <input
+                              formControlName="acceptedByDriver"
+                              class="form-check-input"
+                              type="checkbox"
+                              value="1"
+                              readonly
+                            />
+                          </div>
+                        </div>
+                        <div class="d-flex flex-column">
+                          <div class="d-flex label-heading">Accepted by driver</div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="d-flex">
+                        <div class="d-flex flex-row load-statuses on-the-way-to-deliver">
+                          <div class="form-check form-check-sm form-check-custom form-check-solid">
+                            <input
+                              formControlName="onTheWayToDeliver"
+                              class="form-check-input"
+                              type="checkbox"
+                              value="1"
+                              readonly
+                            />
+                          </div>
+                        </div>
+                        <div class="d-flex flex-column">
+                          <div class="d-flex label-heading">On the way to deliver</div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="d-flex">
+                        <div class="d-flex flex-row load-statuses delivered-to-customer">
+                          <div class="form-check form-check-sm form-check-custom form-check-solid">
+                            <input
+                              formControlName="deliveredToCustomer"
+                              class="form-check-input"
+                              type="checkbox"
+                              value="1"
+                              readonly
+                            />
+                          </div>
+                        </div>
+                        <div class="d-flex flex-column">
+                          <div class="d-flex label-heading">Delivered to customer</div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </form>
+              </div>
+            </div>
+            <div class="row no-margin no-padding">
+              <div class="col">
+                <div class="mb-3 row grey-box no-margin no-padding dest-grey-box no-margin no-padding d-flex flex-row">
+                  <span class="no-margin">Origin</span>
+                  <div class="map-img-text d-flex flex-row justify-content-start align-items-center">
+                    <img class="g-map" src="./assets/media/images/g-map.PNG" alt="" />
+                    <div class="d-flex flex-column">
+                      <p>{{beautifyAddress(load?.origin)}}</p>
+                      <p *ngIf="load?.origin?.location?.phone"><i class="fa fa-mobile-alt"></i>&nbsp;&nbsp;&nbsp;{{load?.origin?.location?.phone}}</p>
+                      <p *ngIf="load?.origin?.location?.fax"><i class="fa fa-fax"></i>&nbsp;&nbsp;&nbsp;{{load?.origin?.location?.fax}}</p>
+                      <p *ngIf="load?.origin?.email"><i class="fa fa-at"></i>&nbsp;&nbsp;&nbsp;{{load?.origin?.email}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="mb-3 row grey-box no-margin no-padding dest-grey-box no-margin no-padding d-flex flex-row">
+                  <span class="no-margin">Destination</span>
+                  <div class="map-img-text d-flex flex-row justify-content-start align-items-center">
+                    <img class="g-map" src="./assets/media/images/g-map.PNG" alt="" />
+                    <div class="d-flex flex-column">
+                      <p>{{beautifyAddress(load?.destination)}}</p>
+                      <p *ngIf="load?.destination?.location?.phone"><i class="fa fa-mobile-alt"></i>&nbsp;&nbsp;&nbsp;{{load?.destination?.location?.phone}}</p>
+                      <p *ngIf="load?.destination?.location?.fax"><i class="fa fa-fax"></i>&nbsp;&nbsp;&nbsp;{{load?.destination?.location?.fax}}</p>
+                      <p *ngIf="load?.destination?.email"><i class="fa fa-at"></i>&nbsp;&nbsp;&nbsp;{{load?.destination?.email}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="tab-header-style">
+            Goods
+          </span>
+        </ng-template>
+        <ng-template matTabContent>
+          <!-- begin::Body -->
+          <div class="card-body py-3 padding-zero">
+            <!-- begin::Table container -->
+            <div class="table-responsive">
+              <!-- begin::Table -->
+              <table class="table align-middle gs-0 gy-4">
+                <!-- begin::Table head -->
+                <thead>
+                  <tr class="fw-bolder text-muted bg-light">
+                    <th class="ps-4 min-w-300px rounded-start text-uppercase">good</th>
+                    <th class="min-w-125px text-uppercase">load</th>
+                    <th class="min-w-125px text-uppercase">weight</th>
+                    <th class="min-w-200px text-uppercase">pallets</th>
+                    <th class="min-w-150px text-uppercase">fr class</th>
+                    <th class="min-w-150px text-uppercase">value</th>
+                    <th class="min-w-200px text-end rounded-end">
+                      <button
+                        class="btn btn-primary alliance-blue-button"
+                        type="button"
+                        data-kt-element="send"
+                        (click)="open(createGoodsModal)"
+                      >
+                        Create
+                      </button>
+                    </th>
+                  </tr>
+                </thead>
+                <!-- end::Table head -->
+                <!-- begin::Table body -->
+                <tbody *ngIf="load?.goods && load?.goods.length > 0">
+                  <tr *ngFor="let good of load?.goods">
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="d-flex justify-content-start flex-column">
+                          <a
+                            href="javascript:void(0)"
+                            class="text-dark text-hover-primary mb-1 fs-6 text-uppercase d-flex flex-column"
+                          >
+                            <span>{{good?.make}}, {{good?.model}}, {{good?.good?.name}}</span>
+                            <span>{{good?.year}}</span>
+                            <span>{{good?.notes}}</span>
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex justify-content-start flex-column">
+                        <a
+                          href="javascript:void(0)"
+                          class="text-dark text-hover-primary d-block mb-1 fs-6 text-capitalize d-flex flex-column"
+                        >
+                          <span><b>Quantity: </b>{{good?.quantity}}</span>
+                          <span><b>Pieces: </b>{{good?.pieces}}</span>
+                          <span><b>User Quantity: </b>{{good?.userQuantity}}</span>
+                        </a>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex justify-content-start flex-column">
+                        <a
+                          href="javascript:void(0)"
+                          class="text-dark text-hover-primary d-block mb-1 fs-6 d-flex flex-column"
+                        >
+                          <span><b>Weight: </b>{{good?.weight}}</span>
+                          <span><b>Tonnage: </b>{{good?.tonnage}}</span>
+                          <span><b>Gr Weight: </b>{{good?.grWeight}}</span>
+                        </a>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex justify-content-start flex-column">
+                        <a
+                          href="javascript:void(0)"
+                          class="text-dark text-hover-primary d-block mb-1 fs-6 text-lowercase"
+                        >
+                          {{good?.palletes}}
+                        </a>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex justify-content-start flex-column">
+                        <a
+                          href="javascript:void(0)"
+                          class="text-dark text-hover-primary d-block mb-1 fs-6 text-lowercase"
+                        >
+                          {{good?.frClass}}
+                        </a>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex justify-content-start flex-column">
+                        <a
+                          href="javascript:void(0)"
+                          class="text-dark text-hover-primary d-block mb-1 fs-6 text-lowercase"
+                        >
+                          {{good?.value}}
+                        </a>
+                      </div>
+                    </td>
+                    <td class="text-end">
+                      <a
+                        href="javascript:void(0)"
+                        class="
+                            btn btn-icon btn-bg-light btn-active-color-primary btn-sm
+                            me-1
+                          "
+                        (click)="fillGoodsEditForm(good); open(editGoodsModal)"
+                      >
+                          <span
+                            [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                            class="svg-icon svg-icon-3"
+                          ></span>
+                      </a>
+                      <a
+                        href="javascript:void(0)"
+                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                        (click)="deleteGoods(good)"
+                      >
+                          <span
+                            [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+                            class="svg-icon svg-icon-3"
+                          ></span>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+                <!-- end::Table body -->
+              </table>
+              <!-- end::Table -->
+            </div>
+            <!-- end::Table container -->
+          </div>
+          <!-- begin::Body -->
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="tab-header-style">
+            Charges
+          </span>
+        </ng-template>
+        <ng-template matTabContent>
+          <!-- begin::Body -->
+          <div class="card-body py-3 padding-zero">
+            <div class="row no-margin">
+              <div class="col-sm-9">
+                <!-- begin::Table container -->
+                <div class="table-responsive">
+                  <!-- begin::Table -->
+                  <table class="table align-middle gs-0 gy-4">
+                    <!-- begin::Table head -->
+                    <thead>
+                      <tr class="fw-bolder text-muted bg-light" style="vertical-align:middle;">
+                        <th class="ps-4 rounded-start text-uppercase">type</th>
+                        <th class="text-uppercase">rate</th>
+                        <th class="text-uppercase">quantity</th>
+                        <th class="text-uppercase">total</th>
+                        <th class="text-uppercase">PTD | BTC</th>
+                        <th class="text-end rounded-end" style="padding-right: 10px !important">
+                          <button
+                            class="btn btn-primary alliance-blue-button"
+                            type="button"
+                            data-kt-element="send"
+                            (click)="open(createChargesModal)"
+                          >
+                            Add
+                          </button>
+                        </th>
+                      </tr>
+                    </thead>
+                    <!-- end::Table head -->
+                    <!-- begin::Table body -->
+                    <tbody *ngIf="load?.charges && load?.charges.length > 0">
+                      <tr *ngFor="let charge of load?.charges">
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <div class="d-flex justify-content-start flex-column">
+                              <a
+                                href="javascript:void(0)"
+                                class="text-dark text-hover-primary mb-1 fs-6 text-uppercase d-flex flex-column"
+                              >
+                                {{charge?.type?.name}}
+                              </a>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="d-flex justify-content-start flex-column">
+                            <a
+                              href="javascript:void(0)"
+                              class="text-dark text-hover-primary d-block mb-1 fs-6 text-capitalize d-flex flex-column"
+                            >
+                              {{charge?.rate}}
+                            </a>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="d-flex justify-content-start flex-column">
+                            <a
+                              href="javascript:void(0)"
+                              class="text-dark text-hover-primary d-block mb-1 fs-6 d-flex flex-column"
+                            >
+                              {{charge?.quantity}}
+                            </a>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="d-flex justify-content-start flex-column">
+                            <a
+                              href="javascript:void(0)"
+                              class="text-dark text-hover-primary d-block mb-1 fs-6 text-lowercase"
+                            >
+                              {{parseFloat(parseFloat(charge?.rate) * parseFloat(charge?.quantity)).toFixed(2)}}
+                            </a>
+                          </div>
+                        </td>
+                        <td>
+                          {{((charge?.payableToDriver)?"YES":"NO")}} | {{((charge?.billableToCustomer)?"YES":"NO")}}
+                        </td>
+                        <td class="text-end">
+                          <a
+                            href="javascript:void(0)"
+                            class="
+                              btn btn-icon btn-bg-light btn-active-color-primary btn-sm
+                              me-1
+                            "
+                            (click)="fillChargesEditForm(charge); open(editChargesModal)"
+                          >
+                            <span
+                              [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                              class="svg-icon svg-icon-3"
+                            ></span>
+                          </a>
+                          <a
+                            href="javascript:void(0)"
+                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                            (click)="deleteCharge(charge)"
+                          >
+                            <span
+                              [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+                              class="svg-icon svg-icon-3"
+                            ></span>
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <!-- end::Table body -->
+                  </table>
+                  <!-- end::Table -->
+                </div>
+                <!-- end::Table container -->
+              </div>
+              <div class="col-sm-3 summary">
+                <form [formGroup]="summaryFormGroup">
+                  <div class="row mb-5">
+                    <div class="col-sm-10">
+                      <h4 class="">SUMMARY</h4>
+                    </div>
+                    <div class="col-sm-2 text-end">
+                      <i  (click)="summaryEditClicked()" class="fa fa-edit fa-2 summary-edit" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-sm-8 text-start">
+                      <label for="distanceMiles" class="col-form-label">Distance (Miles)</label>
+                    </div>
+                    <div class="col-sm-4 text-end">
+                      <input *ngIf="summaryEdit" formControlName="distanceMiles" type="number" class="form-control" id="distanceMiles" (blur)="updateSummary()" (change)="updateSummary()">
+                      <label *ngIf="!summaryEdit" for="ratePerMile" class="col-form-label">{{parseFloat(distanceMiles).toFixed(2)}}</label>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-sm-8 text-start">
+                      <label for="ratePerMile" class="col-form-label">Rate (Per Mile)</label>
+                    </div>
+                    <div class="col-sm-4 text-end">
+                      <input *ngIf="summaryEdit" formControlName="ratePerMile" type="number" class="form-control" id="ratePerMile" (blur)="updateSummary()" (change)="updateSummary()">
+                      <label *ngIf="!summaryEdit" for="ratePerMile" class="col-form-label">{{parseFloat(ratePerMile).toFixed(2)}}</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-8 text-start">
+                      <label class="col-form-label">Sub Total</label>
+                    </div>
+                    <div class="col-sm-4 text-end">
+                      <label class="col-form-label">{{parseFloat(parseFloat(distanceMiles) * parseFloat(ratePerMile)).toFixed(2)}}</label>
+                    </div>
+                  </div>
+                  <div class="separator border-gray-200 mb-5"></div>
+                  <div class="row">
+                    <div class="col-sm-8 text-start">
+                      <label class="col-form-label">Additional Charges</label>
+                    </div>
+                    <div class="col-sm-4 text-end">
+                      <label class="col-form-label">{{additionalCharges}}</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-8 text-start">
+                      <label class="col-form-label">Total</label>
+                    </div>
+                    <div class="col-sm-4 text-end">
+                      <label class="col-form-label">{{parseFloat(((parseFloat(distanceMiles) * parseFloat(ratePerMile)) + parseFloat(additionalCharges))).toFixed(2)}}</label>
+                    </div>
+                  </div>
+                  <div class="row mb-5 mt-5">
+                    <div class="col-sm-10">
+                      <h4 class="">DRIVER PAYMENT</h4>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-8 text-start">
+                      <label class="col-form-label">Rate per Mile</label>
+                    </div>
+                    <div class="col-sm-4 text-end">
+                      <label class="col-form-label">{{parseFloat(driverRatePerMile).toFixed(2)}}</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-8 text-start">
+                      <label class="col-form-label">Distance Payment</label>
+                    </div>
+                    <div class="col-sm-4 text-end">
+                      <label class="col-form-label">{{parseFloat(parseFloat(distanceMiles) * parseFloat(driverRatePerMile)).toFixed(2)}}</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-8 text-start">
+                      <label class="col-form-label">Additional Charges</label>
+                    </div>
+                    <div class="col-sm-4 text-end">
+                      <label class="col-form-label">{{driverAdditionalCharges}}</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-8 text-start">
+                      <label class="col-form-label">Total Payable</label>
+                    </div>
+                    <div class="col-sm-4 text-end">
+                      <label class="col-form-label">{{parseFloat(parseFloat(driverAdditionalCharges)+(parseFloat(distanceMiles) * parseFloat(driverRatePerMile))).toFixed(2)}}</label>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-sm-8 text-start">
+                      <label class="col-form-label">Paid Amount</label>
+                    </div>
+                    <div class="col-sm-4 text-end">
+<!--                      <input *ngIf="summaryEdit" formControlName="paidAmount" type="number" class="form-control" id="paidAmount" (blur)="updateSummary()" (change)="updateSummary()" min="0" [max]="parseFloat(driverAdditionalCharges)+(parseFloat(distanceMiles) * parseFloat(ratePerMile))">
+                      <label *ngIf="!summaryEdit" for="paidAmount" class="col-form-label">{{paidAmount}}</label>-->
+                      <label class="col-form-label">{{parseFloat(paidAmount).toFixed(2)}}</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-8 text-start">
+                      <label class="col-form-label">Balance Amount</label>
+                    </div>
+                    <div class="col-sm-4 text-end">
+<!--                      <input *ngIf="summaryEdit" formControlName="balanceAmount" type="number" class="form-control" id="balanceAmount" (blur)="updateSummary()" (change)="updateSummary()" min="0" [max]="parseFloat(driverAdditionalCharges)+(parseFloat(distanceMiles) * parseFloat(ratePerMile))">
+                      <label *ngIf="!summaryEdit" for="balanceAmount" class="col-form-label">{{balanceAmount}}</label>-->
+                      <label class="col-form-label">{{parseFloat(balanceAmount).toFixed(2)}}</label>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- begin::Body -->
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <!-- end::Body -->
+</div>
+<ng-template #invitedDriverModal let-modal>
+  <form
+    [formGroup]="inviteDriverFormGroup"
+    (ngSubmit)="update({inviteDriver: true})"
+  >
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-invite-driver-title">{{inviteDriverPopupHeading}}</h4>
+      <i class="bi bi-x fs-5 close" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+    </div>
+    <div class="modal-body">
+      <div class="container interested-drivers-wrap" *ngIf="!isInterestedDriverInvited && !isDriverInvite">
+        <div class="row" *ngFor="let interestedDrive of load?.driverInterests;let indexOfElement=index;">
+          <div class="col" [ngClass]="((indexOfElement % 2 === 0) ? ' even-row' : '')">
+            <div class="mb-3 row">
+              <label for="invitedDriver" class="col-sm-12 col-form-label interested-drivers-label">
+                <span class="driver-name text-capitalize"><b>Driver Name: </b> {{interestedDrive?.id?.first_name}} {{interestedDrive?.id?.last_name}}</span>
+                <span class="driver-rate-per-mile text-capitalize"><b>Rate Per Mile: </b> {{interestedDrive?.id?.ratePerMile.toFixed(2)}}</span>
+              </label>
+              <button class="btn btn-primary alliance-yellow-button interested-drivers-btn" type="button" (click)="interestedDriverInvited(interestedDrive)">Invite</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container" *ngIf="isDriverInvite || isInterestedDriverInvited">
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="invitedDriver" class="col-sm-12 col-form-label">Invite Driver</label>
+              <select (change)="changeDriverInvite($event)" formControlName="invitedDriver" id="invitedDriver" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" [disabled]="isInterestedDriverInvited">
+                <option selected value="">Select Driver</option>
+                <option *ngFor="let driver of drivers" value="{{driver?.id}}" class="text-capitalize">{{driver?.first_name}} {{driver?.last_name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="!hideUpdateRatePerMileInput">
+          <div class="col">
+            <div class="mb-3 row">
+              <label class="col-sm-12 form-check-label" for="ratePerMileOfDriver">Drivers Rate Per Mile</label>
+              <input formControlName="ratePerMileOfDriver" type="number" class="form-control" id="ratePerMileOfDriver" (blur)="checkRatePerMileOfInvitedDriver($event)" (change)="checkRatePerMileOfInvitedDriver($event)" (keyup)="checkRatePerMileOfInvitedDriver($event)">
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="!hideUpdateRatePerMileToggleOnDriverProfile">
+          <div class="col">
+            <div class="mb-3 row">
+              <div class="col-sm-12">
+                <div class="form-check form-switch">
+                  <label class="form-check-label" for="updateRatePerMileOnDriverProfile">Update Rate Per Mile On Driver Profile</label>
+                  <input formControlName="updateRatePerMileOnDriverProfile" class="form-check-input" type="checkbox" id="updateRatePerMileOnDriverProfile" checked>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark btn btn-light" (click)="modal.close('Save click')">Cancel</button>
+      <button type="submit" class="btn btn-outline-dark btn btn-primary" [disabled]="inviteDriverFormGroup.invalid">Update</button>
+    </div>
+  </form>
+</ng-template>
+<ng-template #mymodal let-modal>
+  <form
+    [formGroup]="editLoadFormGroup"
+    (ngSubmit)="update({editLoad: true})"
+  >
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Edit Load</h4>
+      <i class="bi bi-x fs-5 close" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <!--<div class="mb-3 row">
+              <label for="Customer" class="col-sm-4 col-form-label">Customer*</label>
+              <div class="col-sm-8">
+                <select formControlName="customer" id="Customer" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" (change)="onCustomerChange($event)">
+                  <option selected value="">Customer</option>
+                  <option *ngFor="let customer of customers" value="{{customer?.id}}" class="text-capitalize">{{customer?.location?.name}}</option>
+                </select>
+              </div>
+            </div>-->
+            <div class="mb-3 row">
+              <label for="customer" class="col-sm-4 col-form-label">Customer*</label>
+              <div class="col-sm-8">
+                <ng-select
+                  (change)="onCustomerChange($event)"
+                  bindLabel="location.name"
+                  placeholder="Select customer"
+                  appendTo="body"
+                  [multiple]="false"
+                  [searchable]="true"
+                  [clearable]="true"
+                  formControlName="customer"
+                  id="customer"
+                >
+                  <ng-option [value]="customer.id" [disabled]="customer.disabled" *ngFor="let customer of customers">
+                    {{customer?.location?.name}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="bolHash" class="col-sm-4 col-form-label">BOL #*</label>
+              <div class="col-sm-8">
+                <input formControlName="bolHash" type="text" class="form-control" id="bolHash">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Code" class="col-sm-4 col-form-label">Procode*</label>
+              <div class="col-sm-8">
+                <input formControlName="proCode" type="text" class="form-control" id="Code">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="poHash" class="col-sm-4 col-form-label">PO #*</label>
+              <div class="col-sm-8">
+                <input formControlName="poHash" type="text" class="form-control" id="poHash">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="shipperRef" class="col-sm-4 col-form-label">Shipper Ref*</label>
+              <div class="col-sm-8">
+                <input formControlName="shipperRef" type="text" class="form-control" id="shipperRef">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <!--<div class="mb-3 row grey-box">
+              <label for="origin" class="col-sm-12 col-form-label">Origin*</label>
+              <div class="col-sm-12">
+                <select formControlName="origin" id="origin" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" (change)="onOriginShipperChange($event)">
+                  <option selected value="">Origin*</option>
+                  <option *ngFor="let originShipper of originShippers" value="{{originShipper?.id}}" class="text-capitalize">{{originShipper?.location?.name}}</option>
+                </select>
+              </div>
+              <p class="grey-box-address">{{originShipperAddress}}</p>
+            </div>-->
+            <div class="mb-3 row grey-box">
+              <label for="origin" class="col-sm-4 col-form-label">Origin*</label>
+              <div class="col-sm-12">
+                <ng-select
+                  (change)="onOriginShipperChange($event)"
+                  bindLabel="location.name"
+                  placeholder="Select origin"
+                  appendTo="body"
+                  [multiple]="false"
+                  [searchable]="true"
+                  [clearable]="true"
+                  formControlName="origin"
+                  id="origin"
+                >
+                  <ng-option [value]="originShipper.id" [disabled]="originShipper.disabled" *ngFor="let originShipper of originShippers">
+                    {{originShipper?.location?.name}}
+                  </ng-option>
+                </ng-select>
+              </div>
+              <p class="grey-box-address">{{originShipperAddress}}</p>
+            </div>
+          </div>
+          <div class="col">
+            <!--<div class="mb-3 row grey-box">
+              <label for="destination" class="col-sm-12 col-form-label">Destination</label>
+              <div class="col-sm-12">
+                <select formControlName="destination" id="destination" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" (change)="onDestinationChange($event)">
+                  <option selected value="">Destination</option>
+                  <option *ngFor="let customerDestination of customerDestinations" value="{{customerDestination?.id}}" class="text-capitalize">{{customerDestination?.location?.name}}</option>
+                </select>
+              </div>
+              <p class="grey-box-address">{{customerDestinationAddress}}</p>
+            </div>-->
+            <div class="mb-3 row grey-box">
+              <label for="destination" class="col-sm-4 col-form-label">Destination*</label>
+              <div class="col-sm-12">
+                <ng-select
+                  (change)="onDestinationChange($event)"
+                  bindLabel="location.name"
+                  placeholder="Select destination"
+                  appendTo="body"
+                  [multiple]="false"
+                  [searchable]="true"
+                  [clearable]="true"
+                  formControlName="destination"
+                  id="destination"
+                >
+                  <ng-option [value]="customerDestination.id" [disabled]="customerDestination.disabled" *ngFor="let customerDestination of customerDestinations">
+                    {{customerDestination?.location?.name}}
+                  </ng-option>
+                </ng-select>
+              </div>
+              <p class="grey-box-address">{{customerDestinationAddress}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="notes" class="col-sm-12 col-form-label">Notes</label>
+              <div class="col-sm-12">
+                <textarea class="form-control" style="width: 100%;" formControlName="notes" name="" id="notes" cols="50" rows="5"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark btn btn-light" (click)="modal.close('Save click')">Cancel</button>
+      <button type="submit" class="btn btn-outline-dark btn btn-primary" [disabled]="editLoadFormGroup.invalid">Update</button>
+    </div>
+  </form>
+</ng-template>
+<ng-template #createGoodsModal let-modal>
+  <form
+    [formGroup]="createGoodsFormGroup"
+    (ngSubmit)="update({createGoods: true})"
+  >
+    <div class="modal-header">
+      <h4 class="modal-title" id="create-goods">Add Goods</h4>
+      <i class="bi bi-x fs-5 close" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Make" class="col-sm-2 col-form-label">Make*</label>
+              <div class="col-sm-10">
+                <input formControlName="make" type="text" class="form-control" id="Make">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Model" class="col-sm-2 col-form-label">Model*</label>
+              <div class="col-sm-10">
+                <input formControlName="model" type="text" class="form-control" id="Model">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Year" class="col-sm-2 col-form-label">Year*</label>
+              <div class="col-sm-10">
+                <input formControlName="year" type="number" class="form-control" id="Year">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Value" class="col-sm-2 col-form-label">Value*</label>
+              <div class="col-sm-10">
+                <input formControlName="value" type="number" class="form-control" id="Value">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col grey-box dest-grey-box grey-box-level-margin">
+            <h4>Load</h4>
+            <div class="row">
+              <div class="col">
+                <div class="mb-3 row">
+                  <label for="Quantity" class="col-sm-2 col-form-label">Quantity*</label>
+                  <div class="col-sm-10">
+                    <input formControlName="quantity" type="number" class="form-control" id="Quantity">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="mb-3 row">
+                  <label for="Pieces" class="col-sm-2 col-form-label">Pieces*</label>
+                  <div class="col-sm-10">
+                    <input formControlName="pieces" type="number" class="form-control" id="Pieces">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="mb-3 row">
+                  <label for="userQuantity" class="col-sm-2 col-form-label">User Quantity*</label>
+                  <div class="col-sm-10">
+                    <input formControlName="userQuantity" type="number" class="form-control" id="userQuantity">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col grey-box dest-grey-box grey-box-level-margin">
+            <h4>Weight</h4>
+            <div class="row">
+              <div class="col">
+                <div class="mb-3 row">
+                  <label for="Weight" class="col-sm-2 col-form-label">Weight*</label>
+                  <div class="col-sm-10">
+                    <input formControlName="weight" type="number" class="form-control" id="Weight">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="mb-3 row">
+                  <label for="Tonnage" class="col-sm-2 col-form-label">Tonnage*</label>
+                  <div class="col-sm-10">
+                    <input formControlName="tonnage" type="number" class="form-control" id="Tonnage">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="mb-3 row">
+                  <label for="GrWeight" class="col-sm-2 col-form-label">Gr. Weight*</label>
+                  <div class="col-sm-10">
+                    <input formControlName="grWeight" type="number" class="form-control" id="GrWeight">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Palletes" class="col-sm-2 col-form-label">Palletes*</label>
+              <div class="col-sm-10">
+                <input formControlName="palletes" type="number" class="form-control" id="Palletes">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="FrClass" class="col-sm-2 col-form-label">Fr. Class*</label>
+              <div class="col-sm-10">
+                <input formControlName="frClass" type="number" class="form-control" id="FrClass">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="loadNotes" class="col-sm-12 col-form-label">Notes*</label>
+              <div class="col-sm-12">
+                <textarea formControlName="notes" type="text" class="form-control" id="loadNotes"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="goods" class="col-sm-12 col-form-label">Goods*</label>
+              <div class="col-sm-12">
+                <select formControlName="good" id="goods" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected value="">Select Good</option>
+                  <option *ngFor="let good of goods" value="{{good?.id}}" class="text-capitalize">{{good?.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark btn btn-light" (click)="modal.close('Save click')">Cancel</button>
+      <button type="submit" class="btn btn-outline-dark btn btn-primary" [disabled]="createGoodsFormGroup.invalid">Add</button>
+    </div>
+  </form>
+</ng-template>
+<ng-template #editGoodsModal let-modal>
+  <form
+    [formGroup]="editGoodsFormGroup"
+    (ngSubmit)="updateGoods()"
+  >
+    <div class="modal-header">
+      <h4 class="modal-title" id="edit-goods">Edit Good</h4>
+      <i class="bi bi-x fs-5 close" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditMake" class="col-sm-2 col-form-label">Make*</label>
+              <div class="col-sm-10">
+                <input formControlName="make" type="text" class="form-control" id="EditMake">
+                <input formControlName="goodsId" type="hidden" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditModel" class="col-sm-2 col-form-label">Model*</label>
+              <div class="col-sm-10">
+                <input formControlName="model" type="text" class="form-control" id="EditModel">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditYear" class="col-sm-2 col-form-label">Year*</label>
+              <div class="col-sm-10">
+                <input formControlName="year" type="number" class="form-control" id="EditYear">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditValue" class="col-sm-2 col-form-label">Value*</label>
+              <div class="col-sm-10">
+                <input formControlName="value" type="number" class="form-control" id="EditValue">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col grey-box dest-grey-box grey-box-level-margin">
+            <h4>Load</h4>
+            <div class="row">
+              <div class="col">
+                <div class="mb-3 row">
+                  <label for="EditQuantity" class="col-sm-2 col-form-label">Quantity*</label>
+                  <div class="col-sm-10">
+                    <input formControlName="quantity" type="number" class="form-control" id="EditQuantity">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="mb-3 row">
+                  <label for="EditPieces" class="col-sm-2 col-form-label">Pieces*</label>
+                  <div class="col-sm-10">
+                    <input formControlName="pieces" type="number" class="form-control" id="EditPieces">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="mb-3 row">
+                  <label for="EdituserQuantity" class="col-sm-2 col-form-label">User Quantity*</label>
+                  <div class="col-sm-10">
+                    <input formControlName="userQuantity" type="number" class="form-control" id="EdituserQuantity">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col grey-box dest-grey-box grey-box-level-margin">
+            <h4>Weight</h4>
+            <div class="row">
+              <div class="col">
+                <div class="mb-3 row">
+                  <label for="EditWeight" class="col-sm-2 col-form-label">Weight*</label>
+                  <div class="col-sm-10">
+                    <input formControlName="weight" type="number" class="form-control" id="EditWeight">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="mb-3 row">
+                  <label for="EditTonnage" class="col-sm-2 col-form-label">Tonnage*</label>
+                  <div class="col-sm-10">
+                    <input formControlName="tonnage" type="number" class="form-control" id="EditTonnage">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="mb-3 row">
+                  <label for="EditGrWeight" class="col-sm-2 col-form-label">Gr. Weight*</label>
+                  <div class="col-sm-10">
+                    <input formControlName="grWeight" type="number" class="form-control" id="EditGrWeight">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditPalletes" class="col-sm-2 col-form-label">Palletes*</label>
+              <div class="col-sm-10">
+                <input formControlName="palletes" type="number" class="form-control" id="EditPalletes">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditFrClass" class="col-sm-2 col-form-label">Fr. Class*</label>
+              <div class="col-sm-10">
+                <input formControlName="frClass" type="number" class="form-control" id="EditFrClass">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditloadNotes" class="col-sm-12 col-form-label">Notes*</label>
+              <div class="col-sm-12">
+                <textarea formControlName="notes" type="text" class="form-control" id="EditloadNotes"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="editGood" class="col-sm-12 col-form-label">Goods*</label>
+              <div class="col-sm-12">
+                <select formControlName="good" id="editGood" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected value="">Select Good</option>
+                  <option *ngFor="let good of goods" value="{{good?.id}}" class="text-capitalize">{{good?.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark btn btn-light" (click)="modal.close('Save click')">Cancel</button>
+      <button type="submit" class="btn btn-outline-dark btn btn-primary" [disabled]="editGoodsFormGroup.invalid">Update</button>
+    </div>
+  </form>
+</ng-template>
+<ng-template #createChargesModal let-modal>
+  <form
+    [formGroup]="createChargesFormGroup"
+    (ngSubmit)="update({createCharges: true})"
+  >
+    <div class="modal-header">
+      <h4 class="modal-title" id="create-charge">Add Charge</h4>
+      <i class="bi bi-x fs-5 close" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="chargesType" class="col-sm-2 col-form-label">Type*</label>
+              <div class="col-sm-10">
+                <select formControlName="type" id="chargesType" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected value="">Select Charges Type</option>
+                  <option *ngFor="let charge of charges" value="{{charge?.id}}" class="text-capitalize">{{charge?.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Rate" class="col-sm-2 col-form-label">Rate*</label>
+              <div class="col-sm-10">
+                <input formControlName="rate" type="number" class="form-control" id="Rate">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="ChargesQuantity" class="col-sm-2 col-form-label">Quantity*</label>
+              <div class="col-sm-10">
+                <input formControlName="quantity" type="number" class="form-control" id="ChargesQuantity">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row form-check form-switch">
+              <label for="payableToDriver" class="col-sm-12 col-form-label form-check-label">
+                <input formControlName="payableToDriver" type="checkbox" class="form-control form-check-input" id="payableToDriver"> Payable to driver
+              </label>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row form-check form-switch">
+              <label for="billableToCustomer" class="col-sm-12 col-form-label form-check-label">
+                <input formControlName="billableToCustomer" type="checkbox" class="form-control form-check-input" id="billableToCustomer"> Billable to customer
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="chargesNotes" class="col-sm-12 col-form-label">Notes*</label>
+              <div class="col-sm-12">
+                <textarea formControlName="notes" type="text" class="form-control" id="chargesNotes"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark btn btn-light" (click)="modal.close('Save click')">Cancel</button>
+      <button type="submit" class="btn btn-outline-dark btn btn-primary" [disabled]="createChargesFormGroup.invalid">Add</button>
+    </div>
+  </form>
+</ng-template>
+<ng-template #editChargesModal let-modal>
+  <form
+    [formGroup]="editChargesFormGroup"
+    (ngSubmit)="updateCharges()"
+  >
+    <div class="modal-header">
+      <h4 class="modal-title" id="edit-charge">Edit Charge</h4>
+      <i class="bi bi-x fs-5 close" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="editChargesType" class="col-sm-2 col-form-label">Type*</label>
+              <div class="col-sm-10">
+                <select formControlName="type" id="editChargesType" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected value="">Select Charges Type</option>
+                  <option *ngFor="let charge of charges" value="{{charge?.id}}" class="text-capitalize">{{charge?.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditRate" class="col-sm-2 col-form-label">Rate*</label>
+              <div class="col-sm-10">
+                <input formControlName="rate" type="number" class="form-control" id="EditRate">
+                <input formControlName="chargesId" type="hidden" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditChargesQuantity" class="col-sm-2 col-form-label">Quantity*</label>
+              <div class="col-sm-10">
+                <input formControlName="quantity" type="number" class="form-control" id="EditChargesQuantity">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row form-check form-switch">
+              <label for="editPayableToDriver" class="col-sm-12 col-form-label form-check-label">
+                <input formControlName="payableToDriver" type="checkbox" class="form-control form-check-input" id="editPayableToDriver"> Payable to driver
+              </label>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row form-check form-switch">
+              <label for="editBillableToCustomer" class="col-sm-12 col-form-label form-check-label">
+                <input formControlName="billableToCustomer" type="checkbox" class="form-control form-check-input" id="editBillableToCustomer"> Billable to customer
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditchargesNotes" class="col-sm-12 col-form-label">Notes*</label>
+              <div class="col-sm-12">
+                <textarea formControlName="notes" type="text" class="form-control" id="EditchargesNotes"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark btn btn-light" (click)="modal.close('Save click')">Cancel</button>
+      <button type="submit" class="btn btn-outline-dark btn btn-primary" [disabled]="editChargesFormGroup.invalid">Update</button>
+    </div>
+  </form>
+</ng-template>
+<style>
+  ::ng-deep #loads-tab .mat-ripple-element{
+    display: none !important;
+  }
+  ::ng-deep #loads-tab div#mat-tab-label-0-0,
+  ::ng-deep #loads-tab div#mat-tab-label-0-1,
+  ::ng-deep #loads-tab div#mat-tab-label-0-2
+  {
+    margin: 0 !important;
+    /*padding: 0 !important;*/
+    /*    max-width: 150px !important;
+        min-width: 150px !important;*/
+    width: auto !important;
+    min-width: unset !important;
+    max-width: unset !important;
+  }
+  ::ng-deep #loads-tab .mat-ripple-element,
+  ::ng-deep #loads-tab .mat-tab-label-content
+  {
+    /*    max-width: 150px !important;
+        min-width: 150px !important;*/
+    width: auto !important;
+    min-width: unset !important;
+    max-width: unset !important;
+  }
+  ::ng-deep #loads-tab .tab-header-style{
+    font-size: 16px;
+    color: #009EF7;
+  }
+  ::ng-deep #loads-tab .mat-tab-label {
+    border-bottom: 2px solid #FFF;
+  }
+  ::ng-deep #loads-tab .mat-tab-label-active {
+    opacity: 1 !important;
+    border-bottom: 2px solid #009EF7;
+  }
+  ::ng-deep #loads-tab mat-tab-body .mat-tab-body-content{
+    padding: 15px 0;
+  }
+</style>

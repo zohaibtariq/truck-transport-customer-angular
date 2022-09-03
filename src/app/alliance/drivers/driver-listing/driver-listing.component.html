@@ -1,0 +1,461 @@
+<div class="card mb-5 mb-xl-8 drivers">
+  <!-- begin::Header -->
+  <div class="card-header border-0 pt-5">
+    <h3 class="card-title align-items-start flex-column">
+      <span class="card-label fw-bolder fs-3 mb-1">{{heading}}</span>
+    </h3>
+    <div class="card-toolbar">
+      <!-- begin::Menu -->
+      <button
+        type="button"
+        class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
+        data-kt-menu-trigger="click"
+        data-kt-menu-placement="bottom-end"
+        data-kt-menu-flip="top-end"
+      >
+         <span
+           [inlineSVG]="'./assets/media/icons/duotune/general/gen024.svg'"
+           class="svg-icon svg-icon-2"
+         ></span>
+      </button>
+      <!-- begin::Menu 2 -->
+      <app-filter-menu (listenFilterSubmit)="filterSubmit($event)" (listenResetFilter)="resetFilter()"></app-filter-menu>
+      <!-- end::Menu 2 -->
+      <!-- end::Menu -->
+      &nbsp;&nbsp;&nbsp;
+      <a href="javascript:void(0)" class="btn btn-sm btn-light-primary" (click)="open(driverModal)">
+      <span
+        [inlineSVG]="'./assets/media/icons/duotune/arrows/arr075.svg'"
+        class="svg-icon svg-icon-3"
+      ></span>
+        Create
+      </a>
+      &nbsp;&nbsp;&nbsp;
+      <a href="javascript:void(0)" class="btn btn-sm btn-light-primary a-svg-hover-fill-color" (click)="export()">
+        <span
+          class="svg-icon svg-icon-3"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <rect x="0" y="0" width="24" height="24"/>
+              <path class="svg-hover-fill-color" d="M17,8 C16.4477153,8 16,7.55228475 16,7 C16,6.44771525 16.4477153,6 17,6 L18,6 C20.209139,6 22,7.790861 22,10 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 L2,9.99305689 C2,7.7839179 3.790861,5.99305689 6,5.99305689 L7.00000482,5.99305689 C7.55228957,5.99305689 8.00000482,6.44077214 8.00000482,6.99305689 C8.00000482,7.54534164 7.55228957,7.99305689 7.00000482,7.99305689 L6,7.99305689 C4.8954305,7.99305689 4,8.88848739 4,9.99305689 L4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,10 C20,8.8954305 19.1045695,8 18,8 L17,8 Z" fill="#009EF7" fill-rule="nonzero" opacity="1"/>
+              <rect class="svg-hover-fill-color" fill="#009EF7" opacity="1" transform="translate(12.000000, 8.000000) scale(1, -1) rotate(-180.000000) translate(-12.000000, -8.000000) " x="11" y="2" width="2" height="12" rx="1"/>
+              <path class="svg-hover-fill-color" d="M12,2.58578644 L14.2928932,0.292893219 C14.6834175,-0.0976310729 15.3165825,-0.0976310729 15.7071068,0.292893219 C16.0976311,0.683417511 16.0976311,1.31658249 15.7071068,1.70710678 L12.7071068,4.70710678 C12.3165825,5.09763107 11.6834175,5.09763107 11.2928932,4.70710678 L8.29289322,1.70710678 C7.90236893,1.31658249 7.90236893,0.683417511 8.29289322,0.292893219 C8.68341751,-0.0976310729 9.31658249,-0.0976310729 9.70710678,0.292893219 L12,2.58578644 Z" fill="#009EF7" fill-rule="nonzero" transform="translate(12.000000, 2.500000) scale(1, -1) translate(-12.000000, -2.500000) "/>
+            </g>
+          </svg>
+        </span>
+        Export
+      </a>
+      &nbsp;&nbsp;&nbsp;
+      <a href="javascript:void(0)" class="btn btn-sm btn-light-primary a-svg-hover-fill-color"
+         routerLinkActive="active"
+         [routerLink]="'/drivers/listing/import'">
+        <span class="svg-icon svg-icon-primary svg-icon-3">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="17px" height="17px" viewBox="0 0 24 24" version="1.1">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <rect x="0" y="0" width="24" height="24"/>
+                <rect class="svg-hover-fill-color" fill="#009EF7" opacity="1" transform="translate(12.000000, 7.000000) rotate(-180.000000) translate(-12.000000, -7.000000) " x="11" y="1" width="2" height="12" rx="1"/>
+                <path class="svg-hover-fill-color" d="M17,8 C16.4477153,8 16,7.55228475 16,7 C16,6.44771525 16.4477153,6 17,6 L18,6 C20.209139,6 22,7.790861 22,10 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 L2,9.99305689 C2,7.7839179 3.790861,5.99305689 6,5.99305689 L7.00000482,5.99305689 C7.55228957,5.99305689 8.00000482,6.44077214 8.00000482,6.99305689 C8.00000482,7.54534164 7.55228957,7.99305689 7.00000482,7.99305689 L6,7.99305689 C4.8954305,7.99305689 4,8.88848739 4,9.99305689 L4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,10 C20,8.8954305 19.1045695,8 18,8 L17,8 Z" fill="#009EF7" fill-rule="nonzero" opacity="1"/>
+                <path class="svg-hover-fill-color" d="M14.2928932,10.2928932 C14.6834175,9.90236893 15.3165825,9.90236893 15.7071068,10.2928932 C16.0976311,10.6834175 16.0976311,11.3165825 15.7071068,11.7071068 L12.7071068,14.7071068 C12.3165825,15.0976311 11.6834175,15.0976311 11.2928932,14.7071068 L8.29289322,11.7071068 C7.90236893,11.3165825 7.90236893,10.6834175 8.29289322,10.2928932 C8.68341751,9.90236893 9.31658249,9.90236893 9.70710678,10.2928932 L12,12.5857864 L14.2928932,10.2928932 Z" fill="#009EF7" fill-rule="nonzero"/>
+            </g>
+          </svg>
+        </span>
+        Import
+      </a>
+    </div>
+  </div>
+  <!-- end::Header -->
+  <!-- begin::Body -->
+  <div class="card-body py-3">
+    <!-- begin::Table container -->
+    <div class="table-responsive">
+      <!--<pre>{{type | json}}</pre>-->
+      <!--<pre>{{drivers[0] | json}}</pre>-->
+      <!-- begin::Table -->
+      <table class="table align-middle gs-0 gy-4">
+        <!-- begin::Table head -->
+        <thead>
+        <tr class="fw-bolder text-muted bg-light">
+          <th class="ps-4 min-w-300px rounded-start">Driver</th>
+          <th class="min-w-300px">ADDRESS</th>
+          <th class="min-w-200px">PHONE/MOBILE</th>
+          <th class="min-w-200px">EMAIL</th>
+          <th class="min-w-200px">RATE/MILE</th>
+          <th class="min-w-200px text-end">ACTIONS&nbsp;&nbsp;&nbsp;&nbsp;</th>
+        </tr>
+        </thead>
+        <!-- end::Table head -->
+        <!-- begin::Table body -->
+        <tbody>
+        <tr *ngFor="let driver of drivers">
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="symbol symbol-50px me-5">
+                  <span class="symbol-label bg-light profile-circular-img">
+                    <img *ngIf="driver?.image!==undefined&&driver?.image!==''" src="{{apiServerPath+driver?.image}}" alt="">
+                    <img *ngIf="driver?.image===undefined||driver?.image===''" [src]="((driver?.gender === 'male') ? './assets/media/svg/avatars/004-boy-1.svg':'./assets/media/svg/avatars/014-girl-7.svg')" alt="">
+                  </span>
+              </div>
+              <div class="d-flex justify-content-start flex-column">
+                  <span class="text-muted fw-bold text-muted d-block fs-7">
+                    {{driver?.code}}
+                  </span>
+                <div>
+                  <span *ngIf="driver?.active;else inactiveBadge" class="custom badge badge-light-success">Active</span>
+                  <ng-template #inactiveBadge>
+                    <span class="custom badge badge-light-danger">Inactive</span>
+                  </ng-template>
+                  <a
+                    href="javascript:void(0)"
+                    class="text-dark fw-bolder text-hover-primary mb-1 fs-6 blue-color"
+                  >
+                    {{driver?.first_name}} {{driver?.last_name}}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <a
+              href="javascript:void(0)"
+              class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6"
+            >
+              <span class="text-capitalize">{{driver?.address}}</span>
+              <span class="text-capitalize">{{((driver?.address && driver?.country && driver?.country !== undefined) ? ', '+driver?.country?.name:'')}}</span>
+              <span class="text-capitalize">{{(((driver?.address || driver?.country) && driver?.city && driver?.city !== undefined) ? ', '+driver?.city?.name:'')}}</span>
+              <span class="text-capitalize">{{(((driver?.address || driver?.country ||driver?.city) && driver?.state && driver?.state !== undefined) ? ', '+driver?.state?.name:'')}}</span>
+              <span class="text-uppercase">{{(((driver?.address || driver?.country || driver?.city|| driver?.state) && driver?.zip && driver?.zip !== undefined) ? ', '+driver?.zip:'')}}</span>
+            </a>
+            <span class="text-muted fw-bold text-muted d-block fs-7"
+            ></span>
+          </td>
+          <td>
+            <a
+              href="javascript:void(0)"
+              class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6"
+            >
+              {{driver?.phone}}
+              {{((driver?.phone && driver?.mobile)?', '+driver?.mobile:'')}}
+            </a>
+            <span class="text-muted fw-bold text-muted d-block fs-7"></span>
+          </td>
+          <td>
+            <a
+              href="javascript:void(0)"
+              class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 text-lowercase"
+            >
+              {{driver?.email}}
+            </a>
+          </td>
+          <td>
+            {{parseFloat(driver?.ratePerMile).toFixed(2)}}
+          </td>
+          <td class="text-end">
+            <a
+              href="javascript:void(0)"
+              class="
+                btn btn-icon btn-bg-light btn-active-color-primary btn-sm
+                me-1
+              "
+              routerLink="{{'/drivers/detail/'+driver?.id}}"
+            >
+              <span
+                [inlineSVG]="'./assets/media/icons/duotune/general/gen019.svg'"
+                class="svg-icon svg-icon-3"
+              ></span>
+            </a>
+<!--            <a-->
+<!--              href="javascript:void(0)"-->
+<!--              class="-->
+<!--              btn btn-icon btn-bg-light btn-active-color-primary btn-sm-->
+<!--              me-1-->
+<!--            "-->
+<!--            >-->
+<!--            <span-->
+<!--              [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"-->
+<!--              class="svg-icon svg-icon-3"-->
+<!--            ></span>-->
+<!--            </a>-->
+<!--            <a
+              href="javascript:void(0)"
+              class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+              (click)="deleteDriver(driver)"
+            >
+            <span
+              [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+              class="svg-icon svg-icon-3"
+            ></span>
+            </a>-->
+          </td>
+        </tr>
+        </tbody>
+        <!-- end::Table body -->
+      </table>
+      <!-- end::Table -->
+    </div>
+    <!-- end::Table container -->
+    <div class="d-flex flex-stack flex-wrap pt-10">
+      <div class="fs-6 fw-bold text-gray-700">Showing
+        {{(page === 1 ) ? page : (((page * limit) - limit) + 1)}} to {{((limit*page) > totalResults) ? totalResults : (limit*page) }}
+        of {{totalResults}} entries</div>
+      <ul class="pagination">
+        <li class="page-item previous" *ngIf="totalPages >= page && totalPages > 1 && page > 1">
+          <a class="page-link cursor-pointer">
+            <i class="previous"  (click)="paginationClicked(page - 1)"></i>
+          </a>
+        </li>
+        <li *ngFor="let pageNum of totalPagesArray" class="page-item" [ngClass]="pageNum === page ? 'active':''">
+          <a class="page-link cursor-pointer"  (click)="paginationClicked(pageNum)"> {{pageNum}} </a>
+        </li>
+        <li class="page-item next" *ngIf="page < totalPages && totalPages > 1">
+          <a class="page-link cursor-pointer">
+            <i class="next" (click)="paginationClicked(page + 1)"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- begin::Body -->
+</div>
+<ng-template #driverModal let-modal>
+  <form
+    [formGroup]="createDriverFormGroup"
+    (ngSubmit)="submit()"
+    class="drivers-modal"
+  >
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Create Driver</h4>
+      <i class="bi bi-x fs-5 close" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="mb-3 row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="first_name" class="col-sm-2 col-form-label">First Name*</label>
+              <div class="col-sm-10">
+                <input formControlName="first_name" type="text" class="form-control" id="first_name">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="last_name" class="col-sm-2 col-form-label">Last Name*</label>
+              <div class="col-sm-10">
+                <input formControlName="last_name" type="text" class="form-control" id="last_name">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Gender" class="col-sm-2 col-form-label">Gender*</label>
+              <div class="col-sm-10">
+                <select formControlName="gender" id="Gender" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Address" class="col-sm-2 col-form-label">Address*</label>
+              <div class="col-sm-10">
+                <input formControlName="address" type="text" class="form-control" id="Address">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Zip" class="col-sm-2 col-form-label">Zip*</label>
+              <div class="col-sm-10">
+                <input formControlName="zip" type="text" class="form-control" id="Zip">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Country" class="col-sm-2 col-form-label">Country*</label>
+              <div class="col-sm-10">
+                <select (change)="onCountryChange($event)" formControlName="country" id="Country" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>Country</option>
+                  <option [value]="country._id" *ngFor="let country of countries">{{country.name}} ({{country.isoCode}})</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <!--<div class="col">
+            <div class="mb-3 row">
+              <label for="State" class="col-sm-2 col-form-label">State*</label>
+              <div class="col-sm-10">
+                <select formControlName="state" id="State" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>State</option>
+                  <option value="us">US</option>
+                  <option value="ca">CA</option>
+                  <option value="uk">UK</option>
+                </select>
+              </div>
+            </div>
+          </div>-->
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="State" class="col-sm-2 col-form-label">State*</label>
+              <div class="col-sm-10">
+                <select (change)="onStateChange($event)" formControlName="state" id="State" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>State</option>
+                  <option [value]="state._id" *ngFor="let state of states">{{state.name}} ({{state.isoCode}})</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <!--<div class="col">
+            <div class="mb-3 row">
+              <label for="City" class="col-sm-2 col-form-label">City*</label>
+              <div class="col-sm-10">
+                <input formControlName="city" type="text" class="form-control" id="City">
+              </div>
+            </div>
+          </div>-->
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="City" class="col-sm-2 col-form-label">City*</label>
+              <div class="col-sm-10">
+                <select formControlName="city" id="City" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>City</option>
+                  <option [value]="city._id" *ngFor="let city of cities">{{city.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <!--<div class="col">
+            <div class="mb-3 row">
+              <label for="Country" class="col-sm-2 col-form-label">Country*</label>
+              <div class="col-sm-10">
+                <select formControlName="country" id="Country" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>Country</option>
+                  <option value="usa">USA</option>
+                  <option value="canada">CANADA</option>
+                  <option value="united kingdom">UNITED KINGDOM</option>
+                </select>
+              </div>
+            </div>
+          </div>-->
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Phone" class="col-sm-2 col-form-label">Phone*</label>
+              <div class="col-sm-10">
+                <!--<input formControlName="phone" type="text" class="form-control" id="Phone" [imask]="{mask: '+{940} (000) 0000-0000'}">
+                (940) 8720-7900
+                -->
+                <input formControlName="phone" type="text" class="form-control" id="Phone" [imask]="{mask: '(000) 0000-0000'}">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Mobile" class="col-sm-2 col-form-label">Mobile*</label>
+              <div class="col-sm-10">
+                <input formControlName="mobile" type="text" class="form-control" id="Mobile" [imask]="{mask: '(000) 0000-0000'}">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="SSN" class="col-sm-2 col-form-label">SSN</label>
+              <div class="col-sm-10">
+                <input formControlName="ssn" type="text" class="form-control" id="SSN">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="TaxID" class="col-sm-2 col-form-label">Tax ID</label>
+              <div class="col-sm-10">
+                <input formControlName="tax_id" type="text" class="form-control" id="TaxID">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="ExternalID" class="col-sm-2 col-form-label">External ID</label>
+              <div class="col-sm-10">
+                <input formControlName="external_id" type="text" class="form-control" id="ExternalID">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="dispatcher" class="col-sm-2 col-form-label">Dispatcher*</label>
+              <div class="col-sm-10">
+                <ng-select bindLabel="name"
+                           placeholder="Select dispatcher"
+                           appendTo="body"
+                           [multiple]="false"
+                           [searchable]="true"
+                           [clearable]="true"
+                           formControlName="dispatcher"
+                           id="dispatcher"
+                >
+                  <ng-option [value]="user.id" [disabled]="user.disabled" *ngFor="let user of users">
+                    {{user.name}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="RatePerMile" class="col-sm-2 col-form-label">Rate Per Mile*</label>
+              <div class="col-sm-10">
+                <input formControlName="ratePerMile" type="number" class="form-control" id="RatePerMile">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-check form-switch">
+              <label class="form-check-label col-sm-2" for="active">Active</label>
+              <input formControlName="active" class="col-sm-10 form-check-input" type="checkbox" id="active" checked>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Email" class="col-sm-2 col-form-label">Email*</label>
+              <div class="col-sm-10">
+                <input formControlName="email" type="text" class="form-control" id="Email">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Password" class="col-sm-2 col-form-label">Password*</label>
+              <div class="col-sm-10">
+                <input formControlName="password" type="password" class="form-control" id="Password">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark btn btn-light" (click)="modal.close('Save click')">Cancel</button>
+      <button type="submit" class="btn btn-outline-dark btn btn-primary" [disabled]="createDriverFormGroup.invalid">Save</button>
+    </div>
+  </form>
+</ng-template>

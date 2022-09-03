@@ -1,0 +1,103 @@
+<div class="card mb-5 mb-xl-8 users">
+  <!-- begin::Header -->
+  <div class="card-header border-0 pt-5">
+    <h3 class="card-title align-items-start flex-column">
+      <span class="card-label fw-bolder fs-3 mb-1">Import Users</span>
+    </h3>
+    <div class="card-toolbar">
+      <a href="./assets/alliance/download-import-samples/users-import-sample.csv" class="btn btn-sm btn-light-primary a-svg-hover-fill-color">
+        <span class="svg-icon svg-icon-primary svg-icon-3">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="17px" height="17px" viewBox="0 0 24 24" version="1.1">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <rect x="0" y="0" width="24" height="24"/>
+                <rect class="svg-hover-fill-color" fill="#009EF7" opacity="1" transform="translate(12.000000, 7.000000) rotate(-180.000000) translate(-12.000000, -7.000000) " x="11" y="1" width="2" height="12" rx="1"/>
+                <path class="svg-hover-fill-color" d="M17,8 C16.4477153,8 16,7.55228475 16,7 C16,6.44771525 16.4477153,6 17,6 L18,6 C20.209139,6 22,7.790861 22,10 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 L2,9.99305689 C2,7.7839179 3.790861,5.99305689 6,5.99305689 L7.00000482,5.99305689 C7.55228957,5.99305689 8.00000482,6.44077214 8.00000482,6.99305689 C8.00000482,7.54534164 7.55228957,7.99305689 7.00000482,7.99305689 L6,7.99305689 C4.8954305,7.99305689 4,8.88848739 4,9.99305689 L4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,10 C20,8.8954305 19.1045695,8 18,8 L17,8 Z" fill="#009EF7" fill-rule="nonzero" opacity="1"/>
+                <path class="svg-hover-fill-color" d="M14.2928932,10.2928932 C14.6834175,9.90236893 15.3165825,9.90236893 15.7071068,10.2928932 C16.0976311,10.6834175 16.0976311,11.3165825 15.7071068,11.7071068 L12.7071068,14.7071068 C12.3165825,15.0976311 11.6834175,15.0976311 11.2928932,14.7071068 L8.29289322,11.7071068 C7.90236893,11.3165825 7.90236893,10.6834175 8.29289322,10.2928932 C8.68341751,9.90236893 9.31658249,9.90236893 9.70710678,10.2928932 L12,12.5857864 L14.2928932,10.2928932 Z" fill="#009EF7" fill-rule="nonzero"/>
+            </g>
+          </svg>
+        </span>
+        Sample
+      </a>
+      &nbsp;&nbsp;&nbsp;
+      <a href="javascript:void(0)" class="btn btn-sm btn-light-primary a-svg-hover-fill-color" (click)="csvReader.click()">
+        <span class="svg-icon svg-icon-primary svg-icon-3">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="17px" height="17px" viewBox="0 0 24 24" version="1.1">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <rect x="0" y="0" width="24" height="24"/>
+                <rect class="svg-hover-fill-color" fill="#009EF7" opacity="1" transform="translate(12.000000, 7.000000) rotate(-180.000000) translate(-12.000000, -7.000000) " x="11" y="1" width="2" height="12" rx="1"/>
+                <path class="svg-hover-fill-color" d="M17,8 C16.4477153,8 16,7.55228475 16,7 C16,6.44771525 16.4477153,6 17,6 L18,6 C20.209139,6 22,7.790861 22,10 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 L2,9.99305689 C2,7.7839179 3.790861,5.99305689 6,5.99305689 L7.00000482,5.99305689 C7.55228957,5.99305689 8.00000482,6.44077214 8.00000482,6.99305689 C8.00000482,7.54534164 7.55228957,7.99305689 7.00000482,7.99305689 L6,7.99305689 C4.8954305,7.99305689 4,8.88848739 4,9.99305689 L4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,10 C20,8.8954305 19.1045695,8 18,8 L17,8 Z" fill="#009EF7" fill-rule="nonzero" opacity="1"/>
+                <path class="svg-hover-fill-color" d="M14.2928932,10.2928932 C14.6834175,9.90236893 15.3165825,9.90236893 15.7071068,10.2928932 C16.0976311,10.6834175 16.0976311,11.3165825 15.7071068,11.7071068 L12.7071068,14.7071068 C12.3165825,15.0976311 11.6834175,15.0976311 11.2928932,14.7071068 L8.29289322,11.7071068 C7.90236893,11.3165825 7.90236893,10.6834175 8.29289322,10.2928932 C8.68341751,9.90236893 9.31658249,9.90236893 9.70710678,10.2928932 L12,12.5857864 L14.2928932,10.2928932 Z" fill="#009EF7" fill-rule="nonzero"/>
+            </g>
+          </svg>
+        </span>
+        Import
+      </a>
+      <input style="display: none" type="file" #csvReader name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event)" accept=".csv" />
+    </div>
+  </div>
+  <!-- end::Header -->
+  <!-- begin::Body -->
+  <div class="card-body py-3">
+    <!-- begin::Table container -->
+    <div class="table-responsive">
+      <!--<pre>{{type | json}}</pre>-->
+      <!--<pre>{{users[0] | json}}</pre>-->
+      <!-- begin::Table -->
+      <table class="table align-middle gs-0 gy-4 table-striped">
+        <!-- begin::Table head -->
+        <thead>
+        <tr class="fw-bolder text-muted bg-light">
+          <th class="ps-4 min-w-300px">ROLE</th>
+          <th class="min-w-300px">ACTIVE</th>
+          <!--<th class="min-w-200px">GENDER</th>-->
+          <th class="min-w-200px">NAME</th>
+          <th class="min-w-200px">EMAIL</th>
+          <!--<th class="min-w-200px">PASSWORD</th>-->
+        </tr>
+        </thead>
+        <!-- end::Table head -->
+        <!-- begin::Table body -->
+        <tbody>
+          <tr *ngFor="let user of records"  [ngClass]="[emailsNotUnique.includes(user.email) ? 'red-error' : '']">
+            <td class="text-capitalize">
+                {{user.role}}
+            </td>
+            <td>
+              <span *ngIf="user.active;else inactiveBadge" class="custom badge badge-light-success">Active</span>
+              <ng-template #inactiveBadge>
+                <span class="custom badge badge-light-danger">Inactive</span>
+              </ng-template>
+            </td>
+<!--            <td  class="text-uppercase">
+              {{user.gender}}
+            </td>-->
+            <td  class="text-uppercase">
+              {{user.name}}
+            </td>
+            <td  class="text-lowercase email">
+              {{user.email}}
+            </td>
+<!--            <td>-->
+<!--              {{user.password}}-->
+<!--            </td>-->
+          </tr>
+        </tbody>
+        <!-- end::Table body -->
+      </table>
+      <!-- end::Table -->
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="alert alert-danger" role="alert" *ngIf="importUserError !== undefined && importUserError !== ''">
+          {{importUserError}}
+        </div>
+        <div class="alert alert-success" role="alert" *ngIf="importUserSuccess !== undefined && importUserSuccess !== ''">
+          {{importUserSuccess}}
+        </div>
+        <button *ngIf="importUserSuccess !== undefined && importUserSuccess !== ''" class="btn btn-primary import-now" (click)="import()">Import Now</button>
+      </div>
+    </div>
+    <!-- end::Table container -->
+  </div>
+  <!-- begin::Body -->
+</div>

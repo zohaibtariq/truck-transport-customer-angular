@@ -1,0 +1,84 @@
+<form
+  [formGroup]="filterFormGroup"
+  (ngSubmit)="filterSubmit()"
+>
+  <div class="px-7 py-5">
+    <div class="fs-5 text-dark fw-bolder">Filter Options</div>
+  </div>
+  <div class="separator border-gray-200 mb-4"></div>
+  <div class="px-7 py-5">
+    <div class="row">
+      <div class="col">
+        <div class="mb-3 row">
+          <div class="col-sm-12">
+            <input formControlName="name" type="text" class="form-control" id="name" placeholder="Search by name, email">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="separator border-gray-200 mb-3"></div>
+    <div class="row">
+      <div class="col">
+        <div class="mb-3 row">
+          <label for="Active" class="col-sm-4 col-form-label">Active</label>
+          <div class="col-sm-8">
+            <select formControlName="active" id="Active" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+              <option value="">Select Status</option>
+              <option value="true">Active</option>
+              <option value="false">InActive</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="mb-3 row">
+          <label for="Role" class="col-sm-4 col-form-label">Role</label>
+          <div class="col-sm-8">
+            <select formControlName="role" id="Role" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+              <option value="">Select Role</option>
+              <option value="admin">Admin</option>
+              <option value="user">User</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="mb-3 row">
+          <label for="gender" class="col-sm-4 col-form-label">Gender</label>
+          <div class="col-sm-8">
+            <select formControlName="gender" id="gender" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="d-flex justify-content-end">
+          <button
+            type="reset"
+            class="btn btn-sm btn-white btn-active-light-primary me-2"
+            data-kt-menu-dismiss="true"
+            (click)="resetFilter()"
+          >
+            Reset
+          </button>
+          <button
+            type="submit"
+            class="btn btn-sm btn-primary"
+            data-kt-menu-dismiss="true"
+          >
+            Apply
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

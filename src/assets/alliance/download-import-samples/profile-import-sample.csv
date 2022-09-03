@@ -1,0 +1,2 @@
+"isCustomer","isBillTo","isShipper","isConsignee","isBroker","isForwarder","isTerminal","mcId","ediId","notes","email","officeHours","active","code","extendedNotes","address1","zip","state","city","country","phone","fax","contact","cell","appt","externalId","name"
+true,true,true,true,true,true,true,"mcid","ediid","notes","kusm@faaa.cvc","9:00 AM to 5:00 PM (Mon to Fri)",true,"cdeaxc","extendedNotes","karachi pakistan","75850","uk","karachi","united kingdom","(940) 8721-7900","(940) 8720-7900","contact","cell","appt","externalId","zohaib tariq"

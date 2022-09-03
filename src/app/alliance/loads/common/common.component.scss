@@ -1,0 +1,28 @@
+.load-black-color{
+  color: black;
+}
+.load-blue-color{
+  color: #009EF7;
+}
+.load-grey-color{
+  color: grey;
+}
+.loads-view table tbody{
+  font-size: 16px;
+}
+.font-weight-bold{
+  font-weight: 600;
+}
+.grey-box{
+  background: #d4d4d4;
+  min-height: 150px;
+  width: calc(100% + 10px);
+  margin: 0 -10px;
+  padding-top: 10px;
+  justify-content: unset;
+  display: flex;
+  flex-direction: column;
+  label {
+    padding: 10px 10px;
+  }
+}

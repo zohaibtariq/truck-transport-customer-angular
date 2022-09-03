@@ -1,0 +1,1282 @@
+<div class="card mb-5 mb-xl-8 detail-page">
+  <!-- begin::Header -->
+  <div class="card-header border-0 pt-5">
+    <h1 class="card-title align-items-start flex-column">
+      <span class="card-label fw-bolder fs-3 mb-1">Driver Detail</span>
+    </h1>
+  </div>
+  <!-- end::Header -->
+  <!-- begin::Body -->
+  <div *ngIf="driver !== {}" class="card-body py-3">
+    <!-- begin::Header -->
+    <div class="d-flex align-items-center mb-5">
+      <!-- begin::User -->
+      <div class="d-flex align-items-left flex-grow-1 flex-column">
+        <div class="d-flex align-items-center flex-grow-1">
+          <div class="symbol symbol-50px me-5">
+            <span class="symbol-label bg-light profile-circular-img profile-img">
+              <img *ngIf="driver?.image!==undefined&&driver?.image!==''" src="{{apiServerPath+driver?.image}}" alt="">
+              <img *ngIf="driver?.image===undefined||driver?.image===''" [src]="((driver?.gender === 'male') ? './assets/media/svg/avatars/004-boy-1.svg':'./assets/media/svg/avatars/014-girl-7.svg')" alt="">
+            </span>
+          </div>
+          <div class="d-flex justify-content-start flex-column">
+            <span class="text-muted fw-bold text-muted d-block fs-7">
+              {{driver?.code}}
+            </span>
+            <div>
+              <span *ngIf="driver?.active;else inactiveBadge" class="custom badge badge-light-success">Active</span>
+              <ng-template #inactiveBadge>
+                <span class="custom badge badge-light-danger">Inactive</span>
+              </ng-template>
+              <a
+                href="javascript:void(0)"
+                class="text-dark fw-bolder text-hover-primary mb-1 fs-6 blue-color"
+              >
+                {{driver?.first_name}} {{driver?.last_name}}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end::User -->
+      <!-- begin::Menu -->
+      <div class="my-0">
+        <button
+          class="btn btn-primary alliance-blue-button"
+          type="button"
+          data-kt-element="send"
+          (click)="open(mymodal)"
+        >
+          Edit
+        </button>
+      </div>
+      <!-- end::Menu -->
+    </div>
+    <!-- end::Header -->
+    <div class="separator border-gray-200  mb-5 mt-5"></div>
+    <div class="d-flex flex-row pd-f-size font-weight-bold">
+      <div class="d-flex flex-column flex-grow-2">
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Address</p>
+            <p class="d-flex flex-grow-1-custom text-capitalize">{{driver?.address}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Phone</p>
+            <p class="d-flex flex-grow-1-custom">{{driver?.phone}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Mobile</p>
+            <p class="d-flex flex-grow-1-custom">{{driver?.mobile}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Gender</p>
+            <p class="d-flex flex-grow-1-custom text-uppercase">{{driver?.gender}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Email</p>
+            <p class="d-flex flex-grow-1-custom text-lowercase">{{driver?.email}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-column flex-grow-2">
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">External ID</p>
+            <p class="d-flex flex-grow-1-custom text-uppercase">{{driver?.external_id}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Zip</p>
+            <p class="d-flex flex-grow-1-custom">{{driver?.zip}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">State</p>
+            <p class="d-flex flex-grow-1-custom text-uppercase">{{driver?.state?.name}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">City</p>
+            <p class="d-flex flex-grow-1-custom  text-capitalize">{{driver?.city?.name}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Rate Per Mile</p>
+            <p class="d-flex flex-grow-1-custom  text-capitalize">{{parseFloat(driver?.ratePerMile).toFixed(2)}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-column flex-grow-2">
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Country</p>
+            <p class="d-flex flex-grow-1-custom text-uppercase">{{driver?.country?.name}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">SSN</p>
+            <p class="d-flex flex-grow-1-custom text-uppercase">{{driver?.ssn}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Tax Id</p>
+            <p class="d-flex flex-grow-1-custom text-uppercase">{{driver?.tax_id}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Dispatcher</p>
+            <p class="d-flex flex-grow-1-custom text-uppercase">{{user?.name}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body py-3" id="drivers-tab">
+    <mat-tab-group animationDuration="0ms">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="tab-header-style">
+            Certifications
+          </span>
+        </ng-template>
+        <ng-template matTabContent>
+          <!-- begin::Body -->
+          <div class="card-body py-3 padding-zero">
+            <!-- begin::Table container -->
+            <div class="table-responsive">
+              <!-- begin::Table -->
+              <table class="table align-middle gs-0 gy-4">
+                <!-- begin::Table head -->
+                <thead>
+                <tr class="fw-bolder text-muted bg-light">
+                  <th class="ps-4 min-w-300px rounded-start">Driving School</th>
+                  <th class="min-w-125px">City/State/Country</th>
+                  <th class="min-w-150px">Phone</th>
+                  <th class="min-w-150px">Start Date</th>
+                  <th class="min-w-150px">Graduation Date</th>
+                  <th class="min-w-200px text-end rounded-end">
+                    <button
+                      class="btn btn-primary alliance-blue-button"
+                      type="button"
+                      data-kt-element="send"
+                      (click)="open(createCertificationModal)"
+                    >
+                      Create
+                    </button>
+                  </th>
+                </tr>
+                </thead>
+                <!-- end::Table head -->
+                <!-- begin::Table body -->
+                <tbody *ngIf="driver?.certifications && driver.certifications.length > 0">
+                  <tr *ngFor="let cp of driver.certifications">
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="d-flex justify-content-start flex-column">
+                        <a
+                          href="javascript:void(0)"
+                          class="text-dark fw-bolder text-hover-primary mb-1 fs-6 text-capitalize"
+                        >
+                          {{cp.drivingSchool}}
+                        </a>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-start flex-column">
+                      <a
+                        href="javascript:void(0)"
+                        class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 text-capitalize"
+                      >
+                        {{cp?.city?.name}}/{{cp?.state?.name}}/{{cp?.country?.name}}
+                      </a>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-start flex-column">
+                      <a
+                        href="javascript:void(0)"
+                        class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 text-lowercase"
+                      >
+                        {{cp.phone}}
+                      </a>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-start flex-column">
+                      <a
+                        href="javascript:void(0)"
+                        class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 text-lowercase"
+                      >
+                        {{cp?.startDate?.year}}-{{cp?.startDate?.month}}-{{cp?.startDate?.day}}
+                      </a>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-start flex-column">
+                      <a
+                        href="javascript:void(0)"
+                        class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 text-lowercase"
+                      >
+                        {{cp?.graduationDate?.year}}-{{cp?.graduationDate?.month}}-{{cp?.graduationDate?.day}}
+                      </a>
+                    </div>
+                  </td>
+                  <td class="text-end">
+                    <a
+                      href="javascript:void(0)"
+                      class="
+                          btn btn-icon btn-bg-light btn-active-color-primary btn-sm
+                          me-1
+                        "
+                      (click)="fillCertificationEditForm(cp); open(editCertificationModal)"
+                    >
+                        <span
+                          [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                          class="svg-icon svg-icon-3"
+                        ></span>
+                    </a>
+                    <a
+                      href="javascript:void(0)"
+                      class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                      (click)="deleteCertification(cp)"
+                    >
+                        <span
+                          [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+                          class="svg-icon svg-icon-3"
+                        ></span>
+                    </a>
+                    <!--                      <a-->
+                    <!--                        href="javascript:void(0)"-->
+                    <!--                        class="-->
+                    <!--                              btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm-->
+                    <!--                              px-4-->
+                    <!--                              me-2-->
+                    <!--                            "-->
+                    <!--                        style="display: none"-->
+                    <!--                      >-->
+                    <!--                        <i class="bi bi-three-dots fs-5"></i>-->
+                    <!--                      </a>-->
+                  </td>
+                </tr>
+                </tbody>
+                <!-- end::Table body -->
+              </table>
+              <!-- end::Table -->
+            </div>
+            <!-- end::Table container -->
+          </div>
+          <!-- begin::Body -->
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="tab-header-style">
+            Equipment Experience Endorsements
+          </span>
+        </ng-template>
+        <ng-template matTabContent>
+          <!--Equipment Experience Endorsements Body-->
+          <div class="card-body py-3 padding-zero">
+            <form
+              [formGroup]="equipmentExperienceEndorsementsFormGroup"
+              (ngSubmit)="updateEquipmentExperienceEndorsements()"
+            >
+              <div class="row no-margin">
+                <div class="col d-flex justify-content-end no-padding">
+                  <button type="submit" class="btn btn-primary pull-right">Update</button>
+                </div>
+              </div>
+              <div class="row drivers-eqp-exp-end">
+                <div class="col">
+                  <div class="row">
+                    <div class="col">
+                      <h4>Equipment Experience</h4>
+                      <ul>
+                        <li>
+                          <div class="form-check form-switch">
+                            <label class="form-check-label col-sm-2" for="Flatbed">Flatbed</label>
+                            <input formControlName="flatbed" class="col-sm-10 form-check-input" type="checkbox" id="Flatbed">
+                          </div>
+                        </li>
+                        <li>
+                          <div class="form-check form-switch">
+                            <label class="form-check-label col-sm-2" for="Van">Van</label>
+                            <input formControlName="van" class="col-sm-10 form-check-input" type="checkbox" id="Van">
+                          </div>
+                        </li>
+                        <li>
+                          <div class="form-check form-switch">
+                            <label class="form-check-label col-sm-2" for="Refrigerated">Refrigerated</label>
+                            <input formControlName="refrigerated" class="col-sm-10 form-check-input" type="checkbox" id="Refrigerated">
+                          </div>
+                        </li>
+                        <li>
+                          <div class="form-check form-switch">
+                            <label class="form-check-label col-sm-2" for="DropDeck">Drop Deck</label>
+                            <input formControlName="dropDeck" class="col-sm-10 form-check-input" type="checkbox" id="DropDeck">
+                          </div>
+                        </li>
+                        <li>
+                          <div class="form-check form-switch">
+                            <label class="form-check-label col-sm-2" for="TowawayVehicles">Towaway Vehicles</label>
+                            <input formControlName="towawayVehicles" class="col-sm-10 form-check-input" type="checkbox" id="TowawayVehicles">
+                          </div>
+                        </li>
+                        <li>
+                          <div class="form-check form-switch">
+                            <label class="form-check-label col-sm-2" for="PassengerVehicles">Passenger Vehicles</label>
+                            <input formControlName="passengerVehicles" class="col-sm-10 form-check-input" type="checkbox" id="PassengerVehicles">
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!--<div class="mb-3 row">Flat</div>-->
+                </div>
+                <div class="col">
+                  <div class="mb-3 row">
+                    <div class="col">
+                      <h4>Endorsements</h4>
+                      <ul>
+                        <li>
+                          <div class="form-check form-switch">
+                            <label class="form-check-label col-sm-2" for="DblTriple">Dbl/Triple</label>
+                            <input formControlName="dblTriple" class="col-sm-10 form-check-input" type="checkbox" id="DblTriple">
+                          </div>
+                        </li>
+                        <li>
+                          <div class="form-check form-switch">
+                            <label class="form-check-label col-sm-2" for="Tanker">Tanker</label>
+                            <input formControlName="tanker" class="col-sm-10 form-check-input" type="checkbox" id="Tanker">
+                          </div>
+                        </li>
+                        <li>
+                          <div class="form-check form-switch">
+                            <label class="form-check-label col-sm-2" for="HazMat">HazMat</label>
+                            <input formControlName="hazMat" class="col-sm-10 form-check-input" type="checkbox" id="HazMat">
+                          </div>
+                        </li>
+                        <li>
+                          <div class="form-check form-switch">
+                            <label class="form-check-label col-sm-2" for="HazMatTanker">HazMat Tanker</label>
+                            <input formControlName="hazMatTanker" class="col-sm-10 form-check-input" type="checkbox" id="HazMatTanker">
+                          </div>
+                        </li>
+                        <li>
+                          <div class="form-check form-switch">
+                            <label class="form-check-label col-sm-2" for="AirBrake">Air Brake</label>
+                            <input formControlName="airBrake" class="col-sm-10 form-check-input" type="checkbox" id="AirBrake">
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col">
+                      <h4>&nbsp;</h4>
+                      <ul>
+                         <li>
+                           <div class="form-check">
+                             <input class="form-check-input" type="radio" name="endorsementsRadio" formControlName="endorsementsRadio" value="cdlClassClassA" id="CDLClassClassA">
+                             <label class="form-check-label" for="CDLClassClassA">
+                               CDL Class Class A
+                             </label>
+                           </div>
+                        </li>
+                        <li>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="endorsementsRadio" formControlName="endorsementsRadio" value="classB" id="ClassB">
+                            <label class="form-check-label" for="ClassB">
+                              Class B
+                            </label>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="endorsementsRadio" formControlName="endorsementsRadio" value="classC" id="ClassC">
+                            <label class="form-check-label" for="ClassC">
+                              Class C
+                            </label>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="endorsementsRadio" formControlName="endorsementsRadio" value="nonCdl" id="NonCDL">
+                            <label class="form-check-label" for="NonCDL">
+                              Non CDL
+                            </label>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="tab-header-style">
+            Expirations / Log Settings
+          </span>
+        </ng-template>
+        <ng-template matTabContent>
+          <form
+            [formGroup]="expirationLogSettingsFormGroup"
+            (ngSubmit)="updateExpirationLogSettings()"
+            >
+            <div class="row no-margin">
+              <div class="col d-flex justify-content-end no-padding">
+                <button type="submit" class="btn btn-primary pull-right">Update</button>
+              </div>
+            </div>
+            <div class="row drivers-eqp-exp-end date-height">
+              <div class="col">
+                <ul>
+                  <li>
+                    <div class="date-wrap">
+                      <label class="form-check-label col-sm-2">Last Drug Test</label>
+                      <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                               formControlName="lastDrugTest"
+                               ngbDatepicker #d1="ngbDatepicker" readonly>
+                        <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button">
+                          <i class="fa fa-calendar fa-2" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="date-wrap">
+                      <label class="form-check-label col-sm-2">Next Drug Test</label>
+                      <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                               formControlName="nextDrugTest"
+                               ngbDatepicker #d2="ngbDatepicker" readonly>
+                        <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button">
+                          <i class="fa fa-calendar fa-2" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="date-wrap">
+                      <label class="form-check-label col-sm-2">Last Alcohal Test</label>
+                      <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                               formControlName="lastAlcohalTest"
+                               ngbDatepicker #d3="ngbDatepicker" readonly>
+                        <button class="btn btn-outline-secondary calendar" (click)="d3.toggle()" type="button">
+                          <i class="fa fa-calendar fa-2" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="date-wrap">
+                      <label class="form-check-label col-sm-2">Next Alcohal Test</label>
+                      <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                               formControlName="nextAlcohalTest"
+                               ngbDatepicker #d4="ngbDatepicker" readonly>
+                        <button class="btn btn-outline-secondary calendar" (click)="d4.toggle()" type="button">
+                          <i class="fa fa-calendar fa-2" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="col">
+                <ul>
+                  <li>
+                    <div class="date-wrap">
+                      <label class="form-check-label col-sm-2">Phys Exam Exp</label>
+                      <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                               formControlName="physExamExp"
+                               ngbDatepicker #d5="ngbDatepicker" readonly>
+                        <button class="btn btn-outline-secondary calendar" (click)="d5.toggle()" type="button">
+                          <i class="fa fa-calendar fa-2" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="date-wrap">
+                      <label class="form-check-label col-sm-2">OO Reg Exp</label>
+                      <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                               formControlName="oORegExp"
+                               ngbDatepicker #d6="ngbDatepicker" readonly>
+                        <button class="btn btn-outline-secondary calendar" (click)="d6.toggle()" type="button">
+                          <i class="fa fa-calendar fa-2" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="date-wrap">
+                      <label class="form-check-label col-sm-2">OO Tractor Exp</label>
+                      <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                               formControlName="oOTractorExp"
+                               ngbDatepicker #d7="ngbDatepicker" readonly>
+                        <button class="btn btn-outline-secondary calendar" (click)="d7.toggle()" type="button">
+                          <i class="fa fa-calendar fa-2" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="date-wrap">
+                      <label class="form-check-label col-sm-2">OO Trailer Exp</label>
+                      <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                               formControlName="oOTrailerExp"
+                               ngbDatepicker #d8="ngbDatepicker" readonly>
+                        <button class="btn btn-outline-secondary calendar" (click)="d8.toggle()" type="button">
+                          <i class="fa fa-calendar fa-2" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="col">
+                <ul>
+                  <li>
+                    <div class="date-wrap">
+                      <label class="form-check-label col-sm-2">OO Inusr Exp</label>
+                      <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                               formControlName="oOInusrExp"
+                               ngbDatepicker #d9="ngbDatepicker" readonly>
+                        <button class="btn btn-outline-secondary calendar" (click)="d9.toggle()" type="button">
+                          <i class="fa fa-calendar fa-2" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="date-wrap">
+                      <label class="form-check-label col-sm-2">Other Enusr Exp</label>
+                      <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                               formControlName="otherInusrExp"
+                               ngbDatepicker #d10="ngbDatepicker" readonly>
+                        <button class="btn btn-outline-secondary calendar" (click)="d10.toggle()" type="button">
+                          <i class="fa fa-calendar fa-2" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="date-wrap">
+                      <label class="form-check-label col-sm-2">MVA Exp</label>
+                      <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                               formControlName="mvaExp"
+                               ngbDatepicker #d11="ngbDatepicker" readonly>
+                        <button class="btn btn-outline-secondary calendar" (click)="d11.toggle()" type="button">
+                          <i class="fa fa-calendar fa-2" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="date-wrap">
+                      <label class="form-check-label col-sm-2">ARC/PRC Exp</label>
+                      <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                               formControlName="arcPrcExp"
+                               ngbDatepicker #d12="ngbDatepicker" readonly>
+                        <button class="btn btn-outline-secondary calendar" (click)="d12.toggle()" type="button">
+                          <i class="fa fa-calendar fa-2" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="col">
+                <ul>
+                  <li>
+                    <div class="date-wrap">
+                      <label class="form-check-label col-sm-2">Haz Mat Training</label>
+                      <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                               formControlName="hazMatTraining"
+                               ngbDatepicker #d13="ngbDatepicker" readonly>
+                        <button class="btn btn-outline-secondary calendar" (click)="d13.toggle()" type="button">
+                          <i class="fa fa-calendar fa-2" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="date-wrap">
+                      <label class="form-check-label col-sm-2">Annual Review</label>
+                      <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                               formControlName="annualReview"
+                               ngbDatepicker #d14="ngbDatepicker" readonly>
+                        <button class="btn btn-outline-secondary calendar" (click)="d14.toggle()" type="button">
+                          <i class="fa fa-calendar fa-2" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="row">
+                      <label for="milesDriven" class="col-sm-12">Miles Driven</label>
+                      <div class="col-sm-12">
+                        <input formControlName="milesDriven" type="text" class="form-control" id="milesDriven">
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="row">
+                      <label for="yrsExp" class="col-sm-12">Yrs Experience</label>
+                      <div class="col-sm-12">
+                        <input formControlName="yrsExp" type="text" class="form-control" id="yrsExp">
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </form>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <!-- end::Body -->
+</div>
+<ng-template #mymodal let-modal>
+  <form
+    [formGroup]="editDriverFormGroup"
+    (ngSubmit)="update()"
+  >
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Edit Driver ({{driver?.first_name}} {{driver?.last_name}})</h4>
+      <i class="bi bi-x fs-5 close" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="d-flex align-items-left flex-grow-1 flex-column profile-img-modal align-items-center">
+              <img *ngIf="driver?.image!==undefined&&driver?.image!==''" src="{{apiServerPath+driver?.image}}" alt="" class="img-circle img-rounded">
+              <img *ngIf="driver?.image===undefined||driver?.image===''" [src]="((driver?.gender === 'male') ? './assets/media/svg/avatars/004-boy-1.svg':'./assets/media/svg/avatars/014-girl-7.svg')" alt="" class="img-circle img-rounded">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Code" class="col-sm-2 col-form-label">Code</label>
+              <div class="col-sm-10">
+                <input formControlName="code" type="text" class="form-control" id="Code" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="file-upload">
+              <input
+                formControlName="file"
+                id="file"
+                type="file"
+                name="file"
+                class="form-control"
+                (change)="onFileChange($event)">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="first_name" class="col-sm-2 col-form-label">First Name*</label>
+              <div class="col-sm-10">
+                <input formControlName="first_name" type="text" class="form-control" id="first_name">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="last_name" class="col-sm-2 col-form-label">Last Name*</label>
+              <div class="col-sm-10">
+                <input formControlName="last_name" type="text" class="form-control" id="last_name">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Gender" class="col-sm-2 col-form-label">Gender*</label>
+              <div class="col-sm-10">
+                <select formControlName="gender" id="Gender" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Address" class="col-sm-2 col-form-label">Address*</label>
+              <div class="col-sm-10">
+                <input formControlName="address" type="text" class="form-control" id="Address">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Zip" class="col-sm-2 col-form-label">Zip*</label>
+              <div class="col-sm-10">
+                <input formControlName="zip" type="text" class="form-control" id="Zip">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Country" class="col-sm-2 col-form-label">Country*</label>
+              <div class="col-sm-10">
+                <select (change)="onCountryChange($event)" formControlName="country" id="Country" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>Country</option>
+                  <option [value]="country._id" *ngFor="let country of countries">{{country.name}} ({{country.isoCode}})</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="State" class="col-sm-2 col-form-label">State*</label>
+              <div class="col-sm-10">
+                <select (change)="onStateChange($event)" formControlName="state" id="State" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>State</option>
+                  <option [value]="state._id" *ngFor="let state of states">{{state.name}} ({{state.isoCode}})</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="City" class="col-sm-2 col-form-label">City*</label>
+              <div class="col-sm-10">
+                <select formControlName="city" id="City" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>City</option>
+                  <option [value]="city._id" *ngFor="let city of cities">{{city.name}}</option>
+                </select>
+              </div>
+<!--              <label for="City" class="col-sm-2 col-form-label">City*</label>
+              <div class="col-sm-10">
+                <input formControlName="city" type="text" class="form-control" id="City">
+              </div>-->
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Phone" class="col-sm-2 col-form-label">Phone*</label>
+              <div class="col-sm-10">
+                <input formControlName="phone" type="text" class="form-control" id="Phone"  [imask]="{mask: '(000) 0000-0000'}">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="mobile" class="col-sm-2 col-form-label">Mobile</label>
+              <div class="col-sm-10">
+                <input formControlName="mobile" type="text" class="form-control" id="mobile"  [imask]="{mask: '(000) 0000-0000'}">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="SSN" class="col-sm-2 col-form-label">SSN*</label>
+              <div class="col-sm-10">
+                <input formControlName="ssn" type="text" class="form-control" id="SSN">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="TaxId" class="col-sm-2 col-form-label">Tax Id</label>
+              <div class="col-sm-10">
+                <input formControlName="tax_id" type="text" class="form-control" id="TaxId">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="ExternalID" class="col-sm-2 col-form-label">External ID*</label>
+              <div class="col-sm-10">
+                <input formControlName="external_id" type="text" class="form-control" id="ExternalID">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="dispatcher" class="col-sm-2 col-form-label">Dispatcher</label>
+              <div class="col-sm-10">
+                <ng-select bindLabel="name"
+                           placeholder="Select item"
+                           appendTo="body"
+                           [multiple]="false"
+                           [searchable]="true"
+                           [clearable]="true"
+                           formControlName="dispatcher"
+                           id="dispatcher"
+                >
+                  <ng-option [value]="user.id" [disabled]="user.disabled" *ngFor="let user of users">
+                    {{user.name}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="RatePerMile" class="col-sm-2 col-form-label">Rate Per Mile*</label>
+              <div class="col-sm-10">
+                <input formControlName="ratePerMile" type="number" class="form-control" id="RatePerMile">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-check form-switch">
+              <label class="form-check-label" for="active">Active</label>
+              <input formControlName="active" class="form-check-input" type="checkbox" id="active" checked>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Email" class="col-sm-2 col-form-label">Email*</label>
+              <div class="col-sm-10">
+                <input formControlName="email" type="text" class="form-control" id="Email">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Password" class="col-sm-2 col-form-label">Password*</label>
+              <div class="col-sm-10">
+                <input formControlName="password" type="text" class="form-control" id="Password">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark btn btn-light" (click)="modal.close('Save click')">Cancel</button>
+      <button type="submit" class="btn btn-outline-dark btn btn-primary" [disabled]="editDriverFormGroup.invalid">Update</button>
+    </div>
+  </form>
+</ng-template>
+<style>
+  ::ng-deep #drivers-tab .mat-ripple-element{
+    display: none !important;
+  }
+  ::ng-deep #drivers-tab div#mat-tab-label-0-0,
+  ::ng-deep #drivers-tab div#mat-tab-label-0-1,
+  ::ng-deep #drivers-tab div#mat-tab-label-0-2
+  {
+    margin: 0 !important;
+    /*padding: 0 !important;*/
+/*    max-width: 150px !important;
+    min-width: 150px !important;*/
+    width: auto !important;
+    min-width: unset !important;
+    max-width: unset !important;
+  }
+  ::ng-deep #drivers-tab .mat-ripple-element,
+  ::ng-deep #drivers-tab .mat-tab-label-content
+  {
+/*    max-width: 150px !important;
+    min-width: 150px !important;*/
+    width: auto !important;
+    min-width: unset !important;
+    max-width: unset !important;
+  }
+  ::ng-deep #drivers-tab .tab-header-style{
+    font-size: 16px;
+    color: #009EF7;
+  }
+  ::ng-deep #drivers-tab .mat-tab-label {
+    border-bottom: 2px solid #FFF;
+  }
+  ::ng-deep #drivers-tab .mat-tab-label-active {
+    opacity: 1 !important;
+    border-bottom: 2px solid #009EF7;
+  }
+  ::ng-deep #drivers-tab mat-tab-body .mat-tab-body-content{
+    padding: 15px 0;
+  }
+</style>
+<ng-template #createCertificationModal let-modal>
+  <form
+    [formGroup]="createCertificationFormGroup"
+    (ngSubmit)="update()"
+  >
+    <div class="modal-header">
+      <h4 class="modal-title">Create Certification</h4>
+      <i class="bi bi-x fs-5 close" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="drivingSchool" class="col-sm-2 col-form-label">Driving School*</label>
+              <div class="col-sm-10">
+                <input formControlName="drivingSchool" type="text" class="form-control" id="drivingSchool">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="CertificationType" class="col-sm-2 col-form-label">Rank*</label>
+              <div class="col-sm-10">
+                <select formControlName="rank" id="CertificationType" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>Rank</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="CertificationCountry" class="col-sm-2 col-form-label">Country*</label>
+              <div class="col-sm-10">
+                <select (change)="onCertCountryChange($event)" formControlName="country" id="CertificationCountry" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>Country</option>
+                  <option [value]="country._id" *ngFor="let country of certCountries">{{country.name}} ({{country.isoCode}})</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="CertificationState" class="col-sm-2 col-form-label">State*</label>
+              <div class="col-sm-10">
+                <select (change)="onCertStateChange($event)" formControlName="state" id="CertificationState" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>State</option>
+                  <option [value]="state._id" *ngFor="let state of certStates">{{state.name}} ({{state.isoCode}})</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="CertificationCity" class="col-sm-2 col-form-label">City*</label>
+              <div class="col-sm-10">
+                <select formControlName="city" id="CertificationCity" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>City</option>
+                  <option [value]="city._id" *ngFor="let city of certCities">{{city.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="CertificationPhone" class="col-sm-2 col-form-label">Phone*</label>
+              <div class="col-sm-10">
+                <input formControlName="phone" type="text" class="form-control" id="CertificationPhone"  [imask]="{mask: '(000) 0000-0000'}">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="CertificationEmail" class="col-sm-2 col-form-label">Contact*</label>
+              <div class="col-sm-10">
+                <input formControlName="contact" type="text" class="form-control" id="CertificationEmail" [imask]="{mask: '(000) 0000-0000'}">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="CertificationRecruiter" class="col-sm-2 col-form-label">Recruiter*</label>
+              <div class="col-sm-10">
+                <input formControlName="recruiter" type="text" class="form-control" id="CertificationRecruiter">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <div class="date-wrap">
+                <label class="form-check-label col-sm-12">Start Date*</label>
+                <div class="input-group col-sm-12">
+                  <input class="form-control" placeholder="yyyy-mm-dd"
+                         formControlName="startDate"
+                         ngbDatepicker #d15="ngbDatepicker" readonly>
+                  <button class="btn btn-outline-secondary calendar" (click)="d15.toggle()" type="button">
+                    <i class="fa fa-calendar fa-2" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <div class="date-wrap">
+                <label class="form-check-label col-sm-12">Graduation Date*</label>
+                <div class="input-group col-sm-12">
+                  <input class="form-control" placeholder="yyyy-mm-dd"
+                         formControlName="graduationDate"
+                         ngbDatepicker #d18="ngbDatepicker" readonly>
+                  <button class="btn btn-outline-secondary calendar" (click)="d18.toggle()" type="button">
+                    <i class="fa fa-calendar fa-2" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="CertificationComments" class="col-sm-2 col-form-label">Comments*</label>
+              <div class="col-sm-10">
+                <textarea class="form-control" style="width: 100%;" formControlName="comments" name="" id="CertificationComments" cols="50" rows="5"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="CertificationReferredBy" class="col-sm-2 col-form-label">Referred By*</label>
+              <div class="col-sm-10">
+                <input formControlName="referredBy" type="text" class="form-control" id="CertificationReferredBy">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark btn btn-light" (click)="modal.close('Save click')">Cancel</button>
+      <button type="submit" class="btn btn-outline-dark btn btn-primary" [disabled]="createCertificationFormGroup.invalid">Create</button>
+    </div>
+  </form>
+</ng-template>
+<ng-template #editCertificationModal let-modal>
+  <form
+    [formGroup]="editCertificationFormGroup"
+    (ngSubmit)="updateCertification()"
+  >
+    <div class="modal-header">
+      <h4 class="modal-title">Edit Certification</h4>
+      <i class="bi bi-x fs-5 close" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditdrivingSchool" class="col-sm-2 col-form-label">Driving School*</label>
+              <div class="col-sm-10">
+                <input formControlName="drivingSchool" type="text" class="form-control" id="EditdrivingSchool">
+                <input formControlName="certificationId" type="hidden" class="form-control" id="EditCertificationId">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditCertificationType" class="col-sm-2 col-form-label">Rank*</label>
+              <div class="col-sm-10">
+                <select formControlName="rank" id="EditCertificationType" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>Rank</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditCertificationCountry" class="col-sm-2 col-form-label">Country*</label>
+              <div class="col-sm-10">
+                <select (change)="onCertCountryChange($event)" formControlName="country" id="EditCertificationCountry" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>Country</option>
+                  <option [value]="country._id" *ngFor="let country of certCountries">{{country.name}} ({{country.isoCode}})</option>
+                </select>
+              </div>
+<!--              <label for="EditCertificationCity" class="col-sm-2 col-form-label">City*</label>
+              <div class="col-sm-10">
+                <input formControlName="city" type="text" class="form-control" id="EditCertificationCity">
+              </div>-->
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditCertificationState" class="col-sm-2 col-form-label">State*</label>
+              <div class="col-sm-10">
+                <select (change)="onCertStateChange($event)" formControlName="state" id="EditCertificationState" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>State</option>
+                  <option [value]="state._id" *ngFor="let state of certStates">{{state.name}} ({{state.isoCode}})</option>
+                </select>
+              </div>
+<!--              <label for="EditCertificationFax" class="col-sm-2 col-form-label">State*</label>
+              <div class="col-sm-10">
+                <input formControlName="state" type="text" class="form-control" id="EditCertificationFax">
+              </div>-->
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditCertificationCity" class="col-sm-2 col-form-label">City*</label>
+              <div class="col-sm-10">
+                <select formControlName="city" id="EditCertificationCity" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>City</option>
+                  <option [value]="city._id" *ngFor="let city of certCities">{{city.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditCertificationPhone" class="col-sm-2 col-form-label">Phone*</label>
+              <div class="col-sm-10">
+                <input formControlName="phone" type="text" class="form-control" id="EditCertificationPhone" [imask]="{mask: '(000) 0000-0000'}">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditCertificationEmail" class="col-sm-2 col-form-label">Contact*</label>
+              <div class="col-sm-10">
+                <input formControlName="contact" type="text" class="form-control" id="EditCertificationEmail" [imask]="{mask: '(000) 0000-0000'}">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditRecruiter" class="col-sm-2 col-form-label">Recruiter*</label>
+              <div class="col-sm-10">
+                <input formControlName="recruiter" type="text" class="form-control" id="EditRecruiter">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <div class="date-wrap">
+                <label class="form-check-label col-sm-12">Start Date*</label>
+                <div class="input-group col-sm-12">
+                  <input class="form-control" placeholder="yyyy-mm-dd"
+                         formControlName="startDate"
+                         ngbDatepicker #d16="ngbDatepicker" readonly>
+                  <button class="btn btn-outline-secondary calendar" (click)="d16.toggle()" type="button">
+                    <i class="fa fa-calendar fa-2" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <div class="date-wrap">
+                <label class="form-check-label col-sm-12">Graduation Date*</label>
+                <div class="input-group col-sm-12">
+                  <input class="form-control" placeholder="yyyy-mm-dd"
+                         formControlName="graduationDate"
+                         ngbDatepicker #d17="ngbDatepicker" readonly>
+                  <button class="btn btn-outline-secondary calendar" (click)="d17.toggle()" type="button">
+                    <i class="fa fa-calendar fa-2" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditCertificationComments" class="col-sm-2 col-form-label">Comments*</label>
+              <div class="col-sm-10">
+                <textarea class="form-control" style="width: 100%;" formControlName="comments" name="" id="EditCertificationComments" cols="50" rows="5"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="EditCertificationReferredBy" class="col-sm-2 col-form-label">Referred By*</label>
+              <div class="col-sm-10">
+                <input formControlName="referredBy" type="text" class="form-control" id="EditCertificationReferredBy">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark btn btn-light" (click)="modal.close('Save click')">Cancel</button>
+      <button type="submit" class="btn btn-outline-dark btn btn-primary" [disabled]="editCertificationFormGroup.invalid">Update</button>
+    </div>
+  </form>
+</ng-template>

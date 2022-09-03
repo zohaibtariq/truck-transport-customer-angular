@@ -1,0 +1,163 @@
+<div class="card mb-5 mb-xl-8 detail-page">
+  <!-- begin::Header -->
+  <div class="card-header border-0 pt-5">
+    <h1 class="card-title align-items-start flex-column">
+      <span class="card-label fw-bolder fs-3 mb-1">User Detail</span>
+    </h1>
+  </div>
+  <!-- end::Header -->
+  <!-- begin::Body -->
+  <div *ngIf="user !== {}" class="card-body py-3">
+    <!-- begin::Header -->
+    <div class="d-flex align-items-center mb-5">
+      <!-- begin::User -->
+      <div class="d-flex align-items-left flex-grow-1 flex-column">
+        <!-- begin::Info -->
+        <div class="d-flex flex-column subh-1">
+          <a href="javascript:void(0)" class="text-gray-400 text-hover-primary fs-6 fw-bolder text-uppercase">
+            {{user?.name}}
+          </a>
+        </div>
+        <div class="d-flex flex-row">
+          <span *ngIf="user?.active;else inactiveBadge" class="badge badge-light-success subh-tag-active">Active</span>
+          <ng-template #inactiveBadge>
+            <span class="badge badge-light-danger subh-tag-inactive">Inactive</span>
+          </ng-template>
+          <span class="text-gray-400 fw-bold subh-2 text-lowercase">{{user?.email}}</span>
+        </div>
+        <!-- end::Info -->
+      </div>
+      <!-- end::User -->
+      <!-- begin::Menu -->
+      <div class="my-0">
+        <button
+          class="btn btn-primary alliance-blue-button"
+          type="button"
+          data-kt-element="send"
+          (click)="open(mymodal)"
+        >
+          Edit
+        </button>
+      </div>
+      <!-- end::Menu -->
+    </div>
+    <!-- end::Header -->
+    <div class="separator border-gray-200  mb-5 mt-5"></div>
+    <div class="d-flex flex-row pd-f-size font-weight-bold">
+      <div class="d-flex flex-column flex-grow-2">
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Name</p>
+            <p class="d-flex flex-grow-1-custom text-initial">{{user?.name}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Email</p>
+            <p class="d-flex flex-grow-1-custom">{{user?.email}}</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Role</p>
+            <p class="d-flex flex-grow-1-custom">{{user?.role}}</p>
+          </div>
+        </div>
+<!--        <div class="d-flex">
+          <div class="d-flex flex-row flex-grow-1">
+            <p class="d-flex flex-grow-1-custom">Gender</p>
+            <p class="d-flex flex-grow-1-custom text-uppercase">{{user?.gender}}</p>
+          </div>
+        </div>-->
+      </div>
+    </div>
+  </div>
+  <!-- end::Body -->
+</div>
+<ng-template #mymodal let-modal>
+  <form
+    [formGroup]="editUserFormGroup"
+    (ngSubmit)="update()"
+  >
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Edit User ({{user?.name}})</h4>
+      <i class="bi bi-x fs-5 close" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="mb-3 row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="name" class="col-sm-2 col-form-label">Name*</label>
+              <div class="col-sm-10">
+                <input formControlName="name" type="text" class="form-control" id="name">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-check form-switch">
+              <label class="form-check-label col-sm-2" for="active">Active</label>
+              <input formControlName="active" class="col-sm-10 form-check-input" type="checkbox" id="active" checked>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="email" class="col-sm-2 col-form-label">Email*</label>
+              <div class="col-sm-10">
+                <input formControlName="email" type="text" class="form-control" id="email">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="password" class="col-sm-2 col-form-label">Password*</label>
+              <div class="col-sm-10">
+                <input formControlName="password" type="password" class="form-control" id="password">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <!--<div class="col">
+            <div class="mb-3 row">
+              <label for="Gender" class="col-sm-2 col-form-label">Gender*</label>
+              <div class="col-sm-10">
+                <select formControlName="gender" id="Gender" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+            </div>
+          </div>-->
+          <div class="col">
+            <div class="mb-3 row">
+              <label for="Role" class="col-sm-2 col-form-label">Role*</label>
+              <div class="col-sm-10">
+                <select formControlName="role" id="Role" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>Role</option>
+                  <option value="admin">Admin</option>
+                  <option value="user">User</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col"></div>
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <div class="alert alert-danger" role="alert" *ngIf="editUserFormError !== undefined && editUserFormError !== ''">
+              {{editUserFormError}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark btn btn-light" (click)="modal.close('Save click')">Cancel</button>
+      <button type="submit" class="btn btn-outline-dark btn btn-primary" [disabled]="editUserFormGroup.invalid">Update</button>
+    </div>
+  </form>
+</ng-template>

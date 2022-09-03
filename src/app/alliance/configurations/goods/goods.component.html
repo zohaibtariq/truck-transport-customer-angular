@@ -1,0 +1,189 @@
+<div class="card mb-5 mb-xl-8 goods">
+  <!-- begin::Header -->
+  <div class="card-header border-0 pt-5">
+    <h3 class="card-title align-items-start flex-column">
+      <span class="card-label fw-bolder fs-3 mb-1">Goods</span>
+    </h3>
+    <div class="card-toolbar">
+      <a href="javascript:void(0)" class="btn btn-sm btn-light-primary" (click)="open(goodCreateModal)">
+      <span
+        [inlineSVG]="'./assets/media/icons/duotune/arrows/arr075.svg'"
+        class="svg-icon svg-icon-3"
+      ></span>
+        Create
+      </a>
+    </div>
+  </div>
+  <!-- end::Header -->
+  <!-- begin::Body -->
+  <div class="card-body py-3">
+    <!-- begin::Table container -->
+    <div class="table-responsive">
+      <!--<pre>{{type | json}}</pre>-->
+      <!-- begin::Table -->
+      <table class="table align-middle gs-0 gy-4">
+        <!-- begin::Table head -->
+        <thead>
+          <tr class="fw-bolder text-muted bg-light">
+            <th class="ps-4 min-w-300px rounded-start">Name of good</th>
+<!--            <th class="min-w-300px">Status</th>-->
+            <th class="min-w-200px text-end">ACTIONS&nbsp;&nbsp;&nbsp;&nbsp;</th>
+          </tr>
+        </thead>
+        <!-- end::Table head -->
+        <!-- begin::Table body -->
+        <tbody>
+          <tr *ngFor="let good of goods">
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="d-flex justify-content-start flex-column">
+                  <span class="text-muted fw-bold text-muted d-block fs-7 blue-color">
+                    {{good.name}}
+                  </span>
+                </div>
+              </div>
+            </td>
+            <!--<td>
+              <span *ngIf="good.active;else inactiveBadge" class="custom badge badge-light-success">Active</span>
+              <ng-template #inactiveBadge>
+                <span class="custom badge badge-light-danger">Inactive</span>
+              </ng-template>
+            </td>-->
+            <td class="text-end">
+              <a
+                href="javascript:void(0)"
+                class="
+                  btn btn-icon btn-bg-light btn-active-color-primary btn-sm
+                  me-1
+                "
+                (click)="fillGoodsEditForm(good); open(goodEditModal)"
+              >
+                <i class="fa fa-edit"></i>
+              </a>
+              <a
+                href="javascript:void(0)"
+                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                (click)="deleteGood(good)"
+              >
+              <span
+                [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+                class="svg-icon svg-icon-3"
+              ></span>
+              </a>
+            </td>
+        </tr>
+        </tbody>
+        <!-- end::Table body -->
+      </table>
+      <!-- end::Table -->
+    </div>
+    <!-- end::Table container -->
+    <div class="d-flex flex-stack flex-wrap pt-10">
+      <div class="fs-6 fw-bold text-gray-700">Showing
+        {{(page === 1 ) ? page : (((page * limit) - limit) + 1)}} to {{((limit*page) > totalResults) ? totalResults : (limit*page) }}
+        of {{totalResults}} entries</div>
+      <ul class="pagination">
+        <li class="page-item previous" *ngIf="totalPages >= page && totalPages > 1 && page > 1">
+          <a class="page-link cursor-pointer">
+            <i class="previous"  (click)="paginationClicked(page - 1)"></i>
+          </a>
+        </li>
+        <li *ngFor="let pageNum of totalPagesArray" class="page-item" [ngClass]="pageNum === page ? 'active':''">
+          <a class="page-link cursor-pointer"  (click)="paginationClicked(pageNum)"> {{pageNum}} </a>
+        </li>
+        <li class="page-item next" *ngIf="page < totalPages && totalPages > 1">
+          <a class="page-link cursor-pointer">
+            <i class="next" (click)="paginationClicked(page + 1)"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- begin::Body -->
+</div>
+<ng-template #goodCreateModal let-modal>
+  <form
+    [formGroup]="createGoodFormGroup"
+    (ngSubmit)="submit()"
+    class="goods-modal"
+  >
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Create Good</h4>
+      <i class="bi bi-x fs-5 close" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3 row">
+        <div class="col-sm-12">
+          <div class="mb-3 row">
+            <label for="name" class="col-sm-2 col-form-label">Name*</label>
+            <div class="col-sm-10">
+              <input formControlName="name" type="text" class="form-control" id="name">
+            </div>
+          </div>
+        </div>
+<!--        <div class="col-sm-4">-->
+<!--          <div class="form-check form-switch">-->
+<!--            <label class="form-check-label col-sm-2" for="active">Status</label>-->
+<!--            <input formControlName="active" class="col-sm-10 form-check-input" type="checkbox" id="active" checked>-->
+<!--          </div>-->
+<!--        </div>-->
+      </div>
+      <div class="mb-3 row">
+        <div class="col">
+          <div class="alert alert-danger" role="alert" *ngIf="createGoodFormError !== undefined && createGoodFormError !== ''">
+            {{createGoodFormError}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark btn btn-light" (click)="modal.close('Save click')">Cancel</button>
+      <button type="submit" class="btn btn-outline-dark btn btn-primary" [disabled]="createGoodFormGroup.invalid">Save</button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #goodEditModal let-modal>
+  <form
+    [formGroup]="editGoodFormGroup"
+    (ngSubmit)="update()"
+    class="goods-modal"
+  >
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title2">Edit Good</h4>
+      <i class="bi bi-x fs-5 close" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="mb-3 row">
+          <div class="col-sm-12">
+            <div class="mb-3 row">
+              <label for="name1" class="col-sm-2 col-form-label">Name*</label>
+              <div class="col-sm-10">
+                <input formControlName="name" type="text" class="form-control" id="name1">
+                <input formControlName="goodId" type="hidden" class="form-control" id="goodId">
+              </div>
+            </div>
+          </div>
+          <!--<div class="col-sm-4">
+            <div class="form-check form-switch">
+              <label class="form-check-label col-sm-2" for="active2">Status</label>
+              <input formControlName="active" class="col-sm-10 form-check-input" type="checkbox" id="active2">
+            </div>
+          </div>-->
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <div class="alert alert-danger" role="alert" *ngIf="editGoodFormError !== undefined && editGoodFormError !== ''">
+              {{editGoodFormError}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark btn btn-light" (click)="modal.close('Save click')">Cancel</button>
+      <button type="submit" class="btn btn-outline-dark btn btn-primary" [disabled]="editGoodFormGroup.invalid">Save</button>
+    </div>
+  </form>
+</ng-template>
