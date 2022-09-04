@@ -97,18 +97,18 @@ export class DetailComponent implements OnInit {
 
   subscribers(){
     this.subscribeLoad()
-    this.subscribeCustomers()
-    this.subscribeDrivers()
-    this.subscribeGoods()
-    this.subscribeCharges()
-    this.subscribeOriginShippers()
+    // this.subscribeCustomers()
+    // this.subscribeDrivers()
+    // this.subscribeGoods()
+    // this.subscribeCharges()
+    // this.subscribeOriginShippers()
   }
 
   subscribeLoad(){
     this.loadSubscription = this.loadsService.load$.subscribe((load: any) => {
       this.load =  load
-      console.log("load");
-      console.log(load);
+      // console.log("load");
+      // console.log(load);
       this.editLoadFormGroup.patchValue({
         customer: load?.customer?.id,
         proCode: load?.proCode,
@@ -702,9 +702,9 @@ export class DetailComponent implements OnInit {
   ngOnDestroy(){
     this.routeSub.unsubscribe();
     this.loadSubscription.unsubscribe();
-    this.customersSubscription.unsubscribe();
-    this.driversSubscription.unsubscribe();
-    this.originsSubscription.unsubscribe();
+    // this.customersSubscription.unsubscribe();
+    // this.driversSubscription.unsubscribe();
+    // this.originsSubscription.unsubscribe();
   }
 
   open(content: any){

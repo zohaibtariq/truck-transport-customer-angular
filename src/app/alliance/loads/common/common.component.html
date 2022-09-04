@@ -19,14 +19,14 @@
         </button>
         <app-load-listing-filter-menu (listenFilterSubmit)="filterSubmit($event)" (listenResetFilter)="resetFilter()" ></app-load-listing-filter-menu>
       </div>
-      &nbsp;&nbsp;&nbsp;
+<!--      &nbsp;&nbsp;&nbsp;
       <a href="javascript:void(0)" class="btn btn-sm btn-light-primary" (click)="open(mymodal)">
       <span
         [inlineSVG]="'./assets/media/icons/duotune/arrows/arr075.svg'"
         class="svg-icon svg-icon-3"
       ></span>
         Create
-      </a>
+      </a>-->
     </div>
   </div>
   <div class="card-body py-3 loads-view">
@@ -81,12 +81,12 @@
               <div class="d-flex justify-content-start flex-column">
                 <span class="badge badge-light-success text-uppercase">{{load?.status}}</span>
               </div>
-              <div *ngIf="load?.status === 'tender'" class="d-flex justify-content-start flex-column">
-                <ng-container>&nbsp;&nbsp;</ng-container>
-              </div>
-              <div *ngIf="load?.status === 'tender'" class="d-flex justify-content-start flex-column">
-                <span class="badge badge-light-success text-uppercase">{{load?.driverInterests?.length}}</span>
-              </div>
+<!--              <div *ngIf="load?.status === 'tender'" class="d-flex justify-content-start flex-column">-->
+<!--                <ng-container>&nbsp;&nbsp;</ng-container>-->
+<!--              </div>-->
+<!--              <div *ngIf="load?.status === 'tender'" class="d-flex justify-content-start flex-column">-->
+<!--                <span class="badge badge-light-success text-uppercase">{{load?.driverInterests?.length}}</span>-->
+<!--              </div>-->
             </div>
           </td>
 <!--          <td *ngIf="status === 'tender'">-->
@@ -110,7 +110,7 @@
                 class="svg-icon svg-icon-3"
               ></span>
             </a>
-            <a
+            <!--<a
               href="javascript:void(0)"
               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
               (click)="deleteProfile(load)"
@@ -119,7 +119,7 @@
               [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
               class="svg-icon svg-icon-3"
             ></span>
-            </a>
+            </a>-->
           </td>
         </tr>
         </tbody>
@@ -147,7 +147,7 @@
     </div>
   </div>
 </div>
-<ng-template #mymodal let-modal>
+<!--<ng-template #mymodal let-modal v-if="false">
   <form
     [formGroup]="createFormGroup"
     (ngSubmit)="submit()"
@@ -160,7 +160,7 @@
       <div class="container">
         <div class="row">
           <div class="col">
-            <!--<div class="mb-3 row">
+            &lt;!&ndash;<div class="mb-3 row">
               <label for="Customer" class="col-sm-4 col-form-label">Customer*</label>
               <div class="col-sm-8">
                 <select formControlName="customer" id="Customer" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" (change)="onCustomerChange($event)">
@@ -168,7 +168,7 @@
                   <option *ngFor="let customer of customers" value="{{customer?.id}}" class="text-capitalize">{{customer?.location?.name}}</option>
                 </select>
               </div>
-            </div>-->
+            </div>&ndash;&gt;
             <div class="mb-3 row">
               <label for="customer" class="col-sm-4 col-form-label">Customer*</label>
               <div class="col-sm-8">
@@ -233,7 +233,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <!--<div class="mb-3 row grey-box">
+            &lt;!&ndash;<div class="mb-3 row grey-box">
               <label for="origin" class="col-sm-12 col-form-label">Origin*</label>
               <div class="col-sm-12">
                 <select formControlName="origin" id="origin" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" (change)="onOriginShipperChange($event)">
@@ -242,7 +242,7 @@
                 </select>
               </div>
               <p class="grey-box-address">{{originShipperAddress}}</p>
-            </div>-->
+            </div>&ndash;&gt;
             <div class="mb-3 row grey-box">
               <label for="origin" class="col-sm-4 col-form-label">Origin*</label>
               <div class="col-sm-12">
@@ -266,7 +266,7 @@
             </div>
           </div>
           <div class="col">
-            <!--<div class="mb-3 row grey-box">
+            &lt;!&ndash;<div class="mb-3 row grey-box">
               <label for="destination" class="col-sm-12 col-form-label">Destination*</label>
               <div class="col-sm-12">
                 <select formControlName="destination" id="destination" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" (change)="onDestinationChange($event)">
@@ -275,7 +275,7 @@
                 </select>
               </div>
               <p class="grey-box-address">{{customerDestinationAddress}}</p>
-            </div>-->
+            </div>&ndash;&gt;
             <div class="mb-3 row grey-box">
               <label for="destination" class="col-sm-4 col-form-label">Destination*</label>
               <div class="col-sm-12">
@@ -306,4 +306,4 @@
       <button type="submit" class="btn btn-outline-dark btn btn-primary" [disabled]="createFormGroup.invalid">Save</button>
     </div>
   </form>
-</ng-template>
+</ng-template>-->

@@ -6,7 +6,7 @@ import {BehaviorSubject, Subscription, shareReplay} from "rxjs";
 import {first} from "rxjs/operators";
 import {saveAs} from 'file-saver';
 
-const API_USERS_URL = `${environment.apiUrl}`;
+const API_USERS_URL = `${environment.apiUrl}profiles/`;
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,8 @@ export class LoadsService {
   constructor(private http: HttpClient){ }
 
   getLoad(id:any): Subscription {
+    // console.log('getLoad')
+    // console.log(API_USERS_URL+'loads/'+id)
     return this.http.get<{}>(API_USERS_URL+'loads/'+id)
       .pipe(shareReplay(), first())
       .subscribe((load: any | undefined) => {

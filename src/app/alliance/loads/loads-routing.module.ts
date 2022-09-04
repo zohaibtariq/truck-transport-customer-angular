@@ -52,8 +52,8 @@ const routes: Routes = [
         path: ':pageSlug/:id',
         component: DetailComponent,
       },
-      { path: '', redirectTo: 'loads', pathMatch: 'full' },
-      { path: '**', redirectTo: 'loads', pathMatch: 'full' },
+      { path: '', redirectTo: '/loads/all', pathMatch: 'full' },
+      { path: '**', redirectTo: '/loads/all', pathMatch: 'full' },
     ],
   },
 ];

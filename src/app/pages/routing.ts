@@ -35,13 +35,13 @@ const Routing: Routes = [
   //       (m) => m.WidgetsExamplesModule
   //     ),
   // },
-  {
-    path: 'types',
-    loadChildren: () =>
-      import('../alliance/types.module').then(
-        (m) => m.TypesModule
-      ),
-  },
+  // {
+  //   path: 'types',
+  //   loadChildren: () =>
+  //     import('../alliance/types.module').then(
+  //       (m) => m.TypesModule
+  //     ),
+  // },
   {
     path: 'loads',
     loadChildren: () =>
@@ -49,27 +49,27 @@ const Routing: Routes = [
         (m) => m.LoadsModule
       ),
   },
-  {
-    path: 'drivers',
-    loadChildren: () =>
-      import('../alliance/drivers.module').then(
-        (m) => m.DriversModule
-      ),
-  },
-  {
-    path: 'users',
-    loadChildren: () =>
-      import('../alliance/user-management/user-management.module').then(
-        (m) => m.UserManagementModule
-      ),
-  },
-  {
-    path: 'configs',
-    loadChildren: () =>
-      import('../alliance/configurations/configurations.module').then(
-        (m) => m.ConfigurationsModule
-      ),
-  },
+  // {
+  //   path: 'drivers',
+  //   loadChildren: () =>
+  //     import('../alliance/drivers.module').then(
+  //       (m) => m.DriversModule
+  //     ),
+  // },
+  // {
+  //   path: 'users',
+  //   loadChildren: () =>
+  //     import('../alliance/user-management/user-management.module').then(
+  //       (m) => m.UserManagementModule
+  //     ),
+  // },
+  // {
+  //   path: 'configs',
+  //   loadChildren: () =>
+  //     import('../alliance/configurations/configurations.module').then(
+  //       (m) => m.ConfigurationsModule
+  //     ),
+  // },
   // {
   //   path: 'apps/chat',
   //   loadChildren: () =>
@@ -78,7 +78,7 @@ const Routing: Routes = [
   {
     path: '',
     // redirectTo: '/dashboard',
-    redirectTo: '/types/customers',
+    redirectTo: '/loads/all',
     pathMatch: 'full',
   },
   {

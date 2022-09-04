@@ -13,7 +13,7 @@ const API_USERS_URL = `${environment.apiUrl}`;
 })
 export class TypesService {
 
-  profileRoutePath: String = 'products';
+  profileRoutePath: String = 'profiles';
   maxLimit = 1000;
   profiles$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   profile$: BehaviorSubject<{}> = new BehaviorSubject<{}>({});

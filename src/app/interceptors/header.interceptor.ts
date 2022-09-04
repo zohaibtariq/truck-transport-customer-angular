@@ -50,13 +50,16 @@ export class HeaderInterceptor implements HttpInterceptor {
         console.error(error);
         console.error(error.error);
         if(error.error.code === 401) {
+          // console.log('RESTRICTED LOGOUT AND REDIRECTION PLEASE ENABLE IT ONCE ISSUE FIXED.');
+          // return throwError(error)
           // console.log(error.error.message + ' (LOG HIM OUT OR USE REFRESH TOKEN)');
           this.authService.logout();
-          console.log('location reload')
-          console.log(this.router.url)
+          // console.log('location reload')
+          // console.log(this.router.url)
           let currentRouteURL = this.router.url.split('?')[0]; // without query param
-          if(currentRouteURL !== '/auth/login')
+          if(currentRouteURL !== '/auth/login'){
             document.location.reload();
+          }
         }else if(error.error.code === 400) {
           if(error.error.message !== '')
             this.toastr.error(error.error.message, 'ERROR');

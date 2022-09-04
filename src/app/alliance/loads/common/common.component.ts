@@ -1,15 +1,15 @@
 import { Component, Input } from '@angular/core';
 import {LoadsService} from "../services/loads.service";
 import {first} from "rxjs/operators";
-import {ConfirmPasswordValidator} from "../../../modules/auth";
+// import {ConfirmPasswordValidator} from "../../../modules/auth";
 import {shareReplay, Subscription} from "rxjs";
 import {ChangeDetectorRef} from '@angular/core';
 import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import {TitleCasePipe} from '@angular/common';
 import {TypesService} from "../../types/services/types.service";
-import * as _ from "underscore";
+// import * as _ from "underscore";
 
 @Component({
   selector: 'app-loads-common',
@@ -63,8 +63,8 @@ export class CommonComponent {
 
   ngOnDestroy(){
     this.loadSubscription.unsubscribe();
-    this.customersSubscription.unsubscribe();
-    this.originsSubscription.unsubscribe();
+    // this.customersSubscription.unsubscribe();
+    // this.originsSubscription.unsubscribe();
   }
 
   initForm(){
@@ -105,8 +105,8 @@ export class CommonComponent {
   subscribers(){
     this.subscribeLoad()
     // this.subscribeUsers()
-    this.subscribeCustomers()
-    this.subscribeOriginShippers()
+    // this.subscribeCustomers()
+    // this.subscribeOriginShippers()
   }
 
   subscribeLoad(){
@@ -141,7 +141,7 @@ export class CommonComponent {
     this.typeService.getCustomerProfiles();
   }
 
-  subscribeOriginShippers(){
+/*  subscribeOriginShippers(){
     this.originsSubscription = this.typeService.shippers$.subscribe((response: any) => {
       if(response?.results){
         this.originShippers = [...response.results]
@@ -151,16 +151,16 @@ export class CommonComponent {
       }
     });
     this.typeService.getShipperProfiles();
-  }
+  }*/
 
-  onDestinationChange(id: any){
+/*  onDestinationChange(id: any){
     if(id){
       this.updateDestinationAddress(id)
       // this.updateDestinationAddress(id.target.value)
     }
-  }
+  }*/
 
-  onCustomerChange(objectId: any){
+/*  onCustomerChange(objectId: any){
     if(objectId){
       // let objectId = id.target.value
       this.createFormGroup.patchValue({
@@ -168,9 +168,9 @@ export class CommonComponent {
       });
       this.updateDestinationAddress(objectId)
     }
-  }
+  }*/
 
-  onOriginShipperChange(objectId: any){
+/*  onOriginShipperChange(objectId: any){
     // let objectId = id.target.value
     if(objectId) {
       let originAddress = _.find(this.originShippers, (originShipper) => {
@@ -181,9 +181,9 @@ export class CommonComponent {
       // console.log(originAddress);
       this.originShipperAddress = this.loadsService.beautifyAddress(originAddress);
     }
-  }
+  }*/
 
-  updateDestinationAddress(objectId: any){
+/*  updateDestinationAddress(objectId: any){
     // console.log('updateDestinationAddress');
     // console.log(objectId);
     let destinationAddress = _.find(this.customers, (customer) => {
@@ -191,7 +191,7 @@ export class CommonComponent {
     })
     // console.log(destinationAddress);
     this.customerDestinationAddress = this.loadsService.beautifyAddress(destinationAddress);
-  }
+  }*/
 
   paginationClicked(pageNum: any){
     // console.log('clicked page num is : ' + pageNum);
@@ -199,16 +199,16 @@ export class CommonComponent {
     this.loadsService.getAllLoads(this.status, this.page);
   }
 
-  open(content: any){
+/*  open(content: any){
     this.originShipperAddress = '';
     this.customerDestinationAddress = '';
       this.modalService.open(content, this.modalOptions).result.then((result) => {
     }, (reason) => {});
-  }
+  }*/
 
-  export(){
+/*  export(){
     this.loadsService.exportProfiles(this.status);
-  }
+  }*/
 
   filterSubmit(filters: any){
     // console.log('filterSubmit');
@@ -224,7 +224,7 @@ export class CommonComponent {
     this.loadsService.getAllLoads(this.status, 1, '');
   }
 
-  deleteProfile(profile: any){
+/*  deleteProfile(profile: any){
     // console.log(profile)
     let profileLocationName = this.titleCasePipe.transform(profile?.location?.name);
     Swal.fire({
@@ -257,7 +257,7 @@ export class CommonComponent {
         })
       }
     })
-  }
+  }*/
 
   beautifyAddress(Obj: any){
     return this.loadsService.beautifyAddress(Obj);

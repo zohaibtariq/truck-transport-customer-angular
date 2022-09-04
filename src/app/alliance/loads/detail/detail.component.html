@@ -29,7 +29,7 @@
       </div>
       <!-- end::User -->
       <!-- begin::Menu -->
-      <div class="my-0">
+      <!--<div class="my-0">
         <button
           *ngIf="load?.status === 'tender'"
           class="btn btn-primary alliance-yellow-button"
@@ -59,7 +59,7 @@
         >
           Edit
         </button>
-      </div>
+      </div>-->
       <!-- end::Menu -->
     </div>
     <!-- end::Header -->
@@ -134,7 +134,7 @@
                       <p *ngIf="load?.invitationSentToDriver" class="text-grey">{{load?.lastInvitedDriver?.phone}}</p>
                       <p *ngIf="!load?.invitationSentToDriver && !load?.isInviteAcceptedByDriver && !load?.onTheWayToDelivery && !load?.deliveredToCustomer">No driver is assigned to this load yet.</p>
                       <p *ngIf="load?.invitationSentToDriver && !load?.isInviteAcceptedByDriver && !load?.onTheWayToDelivery && !load?.deliveredToCustomer" class="text-orange mt-1">Driver has not accepted the invitation yet.</p>
-                      <button *ngIf="!load?.isInviteAcceptedByDriver" class="invite-driver-btn" (click)="openInviteDriver(invitedDriverModal)">Invite Driver</button>
+                      <!--<button *ngIf="!load?.isInviteAcceptedByDriver" class="invite-driver-btn" (click)="openInviteDriver(invitedDriverModal)">Invite Driver</button>-->
                     </div>
                   </div>
                 </div>
@@ -295,14 +295,14 @@
                     <th class="min-w-150px text-uppercase">fr class</th>
                     <th class="min-w-150px text-uppercase">value</th>
                     <th class="min-w-200px text-end rounded-end">
-                      <button
+                      <!--<button
                         class="btn btn-primary alliance-blue-button"
                         type="button"
                         data-kt-element="send"
                         (click)="open(createGoodsModal)"
                       >
                         Create
-                      </button>
+                      </button>-->
                     </th>
                   </tr>
                 </thead>
@@ -379,7 +379,7 @@
                       </div>
                     </td>
                     <td class="text-end">
-                      <a
+                      <!--<a
                         href="javascript:void(0)"
                         class="
                             btn btn-icon btn-bg-light btn-active-color-primary btn-sm
@@ -401,7 +401,7 @@
                             [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
                             class="svg-icon svg-icon-3"
                           ></span>
-                      </a>
+                      </a>-->
                     </td>
                   </tr>
                 </tbody>
@@ -438,14 +438,14 @@
                         <th class="text-uppercase">total</th>
                         <th class="text-uppercase">PTD | BTC</th>
                         <th class="text-end rounded-end" style="padding-right: 10px !important">
-                          <button
+                          <!--<button
                             class="btn btn-primary alliance-blue-button"
                             type="button"
                             data-kt-element="send"
                             (click)="open(createChargesModal)"
                           >
                             Add
-                          </button>
+                          </button>-->
                         </th>
                       </tr>
                     </thead>
@@ -499,7 +499,7 @@
                           {{((charge?.payableToDriver)?"YES":"NO")}} | {{((charge?.billableToCustomer)?"YES":"NO")}}
                         </td>
                         <td class="text-end">
-                          <a
+                          <!--<a
                             href="javascript:void(0)"
                             class="
                               btn btn-icon btn-bg-light btn-active-color-primary btn-sm
@@ -521,7 +521,7 @@
                               [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
                               class="svg-icon svg-icon-3"
                             ></span>
-                          </a>
+                          </a>-->
                         </td>
                       </tr>
                     </tbody>
@@ -533,12 +533,12 @@
               </div>
               <div class="col-sm-3 summary">
                 <form [formGroup]="summaryFormGroup">
-                  <div class="row mb-5">
+<!--                  <div class="row mb-5">
                     <div class="col-sm-10">
                       <h4 class="">SUMMARY</h4>
                     </div>
                     <div class="col-sm-2 text-end">
-                      <i  (click)="summaryEditClicked()" class="fa fa-edit fa-2 summary-edit" aria-hidden="true"></i>
+                      &lt;!&ndash;<i  (click)="summaryEditClicked()" class="fa fa-edit fa-2 summary-edit" aria-hidden="true"></i>&ndash;&gt;
                     </div>
                   </div>
                   <div class="row mb-1">
@@ -583,7 +583,7 @@
                     <div class="col-sm-4 text-end">
                       <label class="col-form-label">{{parseFloat(((parseFloat(distanceMiles) * parseFloat(ratePerMile)) + parseFloat(additionalCharges))).toFixed(2)}}</label>
                     </div>
-                  </div>
+                  </div>-->
                   <div class="row mb-5 mt-5">
                     <div class="col-sm-10">
                       <h4 class="">DRIVER PAYMENT</h4>
@@ -652,7 +652,7 @@
   </div>
   <!-- end::Body -->
 </div>
-<ng-template #invitedDriverModal let-modal>
+<!--<ng-template #invitedDriverModal let-modal v-if="false">
   <form
     [formGroup]="inviteDriverFormGroup"
     (ngSubmit)="update({inviteDriver: true})"
@@ -715,7 +715,7 @@
     </div>
   </form>
 </ng-template>
-<ng-template #mymodal let-modal>
+<ng-template #mymodal let-modal v-if="false">
   <form
     [formGroup]="editLoadFormGroup"
     (ngSubmit)="update({editLoad: true})"
@@ -728,7 +728,7 @@
       <div class="container">
         <div class="row">
           <div class="col">
-            <!--<div class="mb-3 row">
+            &lt;!&ndash;<div class="mb-3 row">
               <label for="Customer" class="col-sm-4 col-form-label">Customer*</label>
               <div class="col-sm-8">
                 <select formControlName="customer" id="Customer" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" (change)="onCustomerChange($event)">
@@ -736,7 +736,7 @@
                   <option *ngFor="let customer of customers" value="{{customer?.id}}" class="text-capitalize">{{customer?.location?.name}}</option>
                 </select>
               </div>
-            </div>-->
+            </div>&ndash;&gt;
             <div class="mb-3 row">
               <label for="customer" class="col-sm-4 col-form-label">Customer*</label>
               <div class="col-sm-8">
@@ -801,7 +801,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <!--<div class="mb-3 row grey-box">
+            &lt;!&ndash;<div class="mb-3 row grey-box">
               <label for="origin" class="col-sm-12 col-form-label">Origin*</label>
               <div class="col-sm-12">
                 <select formControlName="origin" id="origin" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" (change)="onOriginShipperChange($event)">
@@ -810,7 +810,7 @@
                 </select>
               </div>
               <p class="grey-box-address">{{originShipperAddress}}</p>
-            </div>-->
+            </div>&ndash;&gt;
             <div class="mb-3 row grey-box">
               <label for="origin" class="col-sm-4 col-form-label">Origin*</label>
               <div class="col-sm-12">
@@ -834,7 +834,7 @@
             </div>
           </div>
           <div class="col">
-            <!--<div class="mb-3 row grey-box">
+            &lt;!&ndash;<div class="mb-3 row grey-box">
               <label for="destination" class="col-sm-12 col-form-label">Destination</label>
               <div class="col-sm-12">
                 <select formControlName="destination" id="destination" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" (change)="onDestinationChange($event)">
@@ -843,7 +843,7 @@
                 </select>
               </div>
               <p class="grey-box-address">{{customerDestinationAddress}}</p>
-            </div>-->
+            </div>&ndash;&gt;
             <div class="mb-3 row grey-box">
               <label for="destination" class="col-sm-4 col-form-label">Destination*</label>
               <div class="col-sm-12">
@@ -885,7 +885,7 @@
     </div>
   </form>
 </ng-template>
-<ng-template #createGoodsModal let-modal>
+<ng-template #createGoodsModal let-modal v-if="false">
   <form
     [formGroup]="createGoodsFormGroup"
     (ngSubmit)="update({createGoods: true})"
@@ -1047,7 +1047,7 @@
     </div>
   </form>
 </ng-template>
-<ng-template #editGoodsModal let-modal>
+<ng-template #editGoodsModal let-modal v-if="false">
   <form
     [formGroup]="editGoodsFormGroup"
     (ngSubmit)="updateGoods()"
@@ -1210,7 +1210,7 @@
     </div>
   </form>
 </ng-template>
-<ng-template #createChargesModal let-modal>
+<ng-template #createChargesModal let-modal v-if="false">
   <form
     [formGroup]="createChargesFormGroup"
     (ngSubmit)="update({createCharges: true})"
@@ -1288,7 +1288,7 @@
     </div>
   </form>
 </ng-template>
-<ng-template #editChargesModal let-modal>
+<ng-template #editChargesModal let-modal v-if="false">
   <form
     [formGroup]="editChargesFormGroup"
     (ngSubmit)="updateCharges()"
@@ -1366,7 +1366,7 @@
       <button type="submit" class="btn btn-outline-dark btn btn-primary" [disabled]="editChargesFormGroup.invalid">Update</button>
     </div>
   </form>
-</ng-template>
+</ng-template>-->
 <style>
   ::ng-deep #loads-tab .mat-ripple-element{
     display: none !important;

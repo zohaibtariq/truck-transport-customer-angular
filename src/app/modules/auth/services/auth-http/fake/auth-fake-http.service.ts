@@ -8,9 +8,8 @@ import { AuthModel } from '../../../models/auth.model';
 import { UsersTable } from '../../../../../_fake/users.table';
 import { environment } from '../../../../../../environments/environment';
 
-// const API_USERS_URL = `api/users`;
 const API_URL = `${environment.apiUrl}`;
-const API_USERS_URL = `${environment.apiUrl}auth/login`;
+const API_PROFILES_URL = `${environment.apiUrl}profiles/login`;
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +17,8 @@ const API_USERS_URL = `${environment.apiUrl}auth/login`;
 export class AuthHTTPService {
   constructor(private http: HttpClient) {}
   getLoggedInUserFromAPI(email:any, password:any): Observable<any[]> {
-    // return this.http.get<any[]>(API_USERS_URL);
-    return this.http.post<any[]>(API_USERS_URL,  {
+    // return this.http.get<any[]>(API_PROFILES_URL);
+    return this.http.post<any[]>(API_PROFILES_URL,  {
       "email": email,
       "password": password
     });/*.subscribe((result) => {
@@ -35,32 +34,32 @@ export class AuthHTTPService {
     }
     return this.getLoggedInUserFromAPI(email, password)
       .pipe(
-        map((user: any) => {
-          // console.log('login response all user');
-          // console.log(user);
-          if (user === null || user === undefined || !user.hasOwnProperty('user')) {
+        map((profile: any) => {
+          // console.log('login response all profile');
+          // console.log(profile);
+          if (profile === null || profile === undefined || !profile.hasOwnProperty('profile')) {
             return notFoundError;
           }
           // const currentUser =
-          // const user = result.find((u: any) => {
+          // const profile = result.find((u: any) => {
           //   return (
           //     u.email.toLowerCase() === email.toLowerCase() &&
           //     u.password === password
           //   );
           // });
-          // if (!user) {
+          // if (!profile) {
           //   return notFoundError;
           // }
           // console.log('login response final');
-          // console.log(user);
+          // console.log(profile);
           // return false;
           const auth = new AuthModel();
-          auth.user = user.user;
-          auth.authToken = user.tokens.access.token;
-          auth.refreshToken = user.tokens.refresh.token;
-          auth.expiresIn = user.tokens.access.expires; //new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
-          // auth.authToken = user.authToken;
-          // auth.refreshToken = user.refreshToken;
+          auth.profile = profile.profile;
+          auth.authToken = profile.tokens.access.token;
+          auth.refreshToken = profile.tokens.refresh.token;
+          auth.expiresIn = profile.tokens.access.expires; //new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
+          // auth.authToken = profile.authToken;
+          // auth.refreshToken = profile.refreshToken;
           // auth.expiresIn = new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
           return auth;
         }),
@@ -73,47 +72,49 @@ export class AuthHTTPService {
       );
   }
 
-  createUser(user: UserModel): Observable<any> {
-    user.roles = [2]; // Manager
-    user.authToken = 'auth-token-' + Math.random();
-    user.refreshToken = 'auth-token-' + Math.random();
-    user.expiresIn = new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
-    user.pic = './assets/media/avatars/300-1.jpg';
+  createUser(profile: UserModel): Observable<any> {
+    console.log('MUST NOT GET CALLED ::: createUser');
+    profile.roles = [2]; // Manager
+    profile.authToken = 'auth-token-' + Math.random();
+    profile.refreshToken = 'auth-token-' + Math.random();
+    profile.expiresIn = new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
+    profile.pic = './assets/media/avatars/300-1.jpg';
 
-    return this.http.post<UserModel>(API_USERS_URL, user);
+    return this.http.post<UserModel>(API_PROFILES_URL, profile);
   }
 
   forgotPassword(email: string): Observable<any> {
-    return this.http.post<any[]>(API_URL+'auth/forgot-password',  {
+    return this.http.post<any[]>(API_URL+'profiles/forgot-password',  {
       "email": email
     });
     // return this.getAllUsers().pipe(
     //   map((result: UserModel[]) => {
-    //     const user = result.find(
+    //     const profile = result.find(
     //       (u) => u.email.toLowerCase() === email.toLowerCase()
     //     );
-    //     return user !== undefined;
+    //     return profile !== undefined;
     //   })
     // );
   }
 
   resetPassword(resetPassData: any): Observable<any> {
-    return this.http.post<any[]>(API_URL+'auth/reset-password?token='+resetPassData?.token,  {password: resetPassData?.password});
+    return this.http.post<any[]>(API_URL+'profiles/reset-password?token='+resetPassData?.token,  {password: resetPassData?.password});
   }
 
   getUserByToken(token: string): Observable<UserModel | undefined> {
-    const user = UsersTable.users.find((u: UserModel) => {
+    console.log('MUST NOT GET CALLED ::: getUserByToken 1');
+    const profile = UsersTable.users.find((u: UserModel) => {
       return u.authToken === token;
     });
 
-    if (!user) {
+    if (!profile) {
       return of(undefined);
     }
 
-    return of(user);
+    return of(profile);
   }
 
   getAllUsers(): Observable<UserModel[]> {
-    return this.http.get<UserModel[]>(API_USERS_URL);
+    return this.http.get<UserModel[]>(API_PROFILES_URL);
   }
 }

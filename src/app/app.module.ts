@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
 
 // #fake-start#
 import { FakeAPIService } from './_fake';
-import {TypesService} from "./alliance/types/services/types.service";
+// import {TypesService} from "./alliance/types/services/types.service";
 import {DropdownMenusModule} from "./alliance/theme/dropdown-menus/dropdown-menus.module";
 import {TitleCasePipe} from "@angular/common";
 // #fake-end#

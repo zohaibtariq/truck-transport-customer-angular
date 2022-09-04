@@ -82,19 +82,19 @@ export class AuthService implements OnDestroy {
     // console.log('AuthService listened getUserByToken');
     const auth = this.getAuthFromLocalStorage();
     // console.log(auth);
-    if (!auth || !auth.authToken || !auth.user) {
+    if (!auth || !auth.authToken || !auth.profile) {
       return of(undefined);
     }
-    const user = auth.user;
-    if (user) {
+    const profile = auth.profile;
+    if (profile) {
       // console.log('if user');
       // console.log(user);
-      this.currentUserSubject.next(user);
+      this.currentUserSubject.next(profile);
     } else {
       // console.log('else');
       this.logout();
     }
-    return user;
+    return profile;
     // this.isLoadingSubject.next(false)
     // console.log('authHttpService calling getUserByToken');
     // return this.authHttpService.getUserByToken(auth.authToken).pipe(
@@ -117,13 +117,13 @@ export class AuthService implements OnDestroy {
 
   getCustomUserByToken(): object | undefined {
     const auth = this.getAuthFromLocalStorage();
-    if (!auth || !auth.authToken || !auth.user) {
+    if (!auth || !auth.authToken || !auth.profile) {
       return of(undefined);
     }
     this.isLoadingSubject.next(true);
-    this.currentUserSubject.next(auth?.user);
+    this.currentUserSubject.next(auth?.profile);
     this.isLoadingSubject.next(false)
-    return auth?.user;
+    return auth?.profile;
   }
 
   // need create new user then login

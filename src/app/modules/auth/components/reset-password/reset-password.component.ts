@@ -84,8 +84,8 @@ export class ResetPasswordComponent implements OnInit {
         next: (result: any) => {
           this.errorState = ErrorStates.NoError;
           this.authService.updateIsLoadingSubject(false);
-          console.log('resetPasswordSubscriber : RESULT')
-          console.log(result)
+          // console.log('resetPasswordSubscriber : RESULT')
+          // console.log(result)
           setTimeout(() => {
             this.router.navigate(['/auth/login']);
           }, 1500)
@@ -93,12 +93,12 @@ export class ResetPasswordComponent implements OnInit {
         error: (err: any) => {
           this.authService.updateIsLoadingSubject(false);
           this.errorState = ErrorStates.HasError;
-          console.log('resetPasswordSubscriber : ERROR')
-          console.log(err)
+          // console.log('resetPasswordSubscriber : ERROR')
+          // console.log(err)
         },
         complete: () => {
           this.authService.updateIsLoadingSubject(false);
-          console.log('resetPasswordSubscriber : COMPLETE')
+          // console.log('resetPasswordSubscriber : COMPLETE')
         }
       })
     this.unsubscribe.push(resetPasswordSubscriber);
