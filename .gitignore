@@ -49,3 +49,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+build.sh
+deploy.sh
+build_backup.sh
+deploy_backup.sh
