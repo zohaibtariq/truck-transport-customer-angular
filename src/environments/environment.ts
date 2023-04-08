@@ -4,7 +4,7 @@
 const ports = {
   admin: 4200,
   customer: 4201,
-  api: 3001,
+  api: 3000,
 };
 const serverIPDomain = 'localhost';
 const apiPathWithPort = 'http://' + serverIPDomain + ':' + ports.api + '/';
