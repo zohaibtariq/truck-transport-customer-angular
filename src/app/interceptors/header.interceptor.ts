@@ -58,7 +58,7 @@ export class HeaderInterceptor implements HttpInterceptor {
           // console.log(this.router.url)
           let currentRouteURL = this.router.url.split('?')[0]; // without query param
           if(currentRouteURL !== '/auth/login'){
-            document.location.reload();
+            window.location.href = '/auth/login';
           }
         }else if(error.error.code === 400) {
           if(error.error.message !== '')
