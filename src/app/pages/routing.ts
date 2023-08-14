@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-// import {UserManagementModule} from "../alliance/user-management/user-management.module";
-// import {ConfigurationsModule} from "../alliance/configurations/configurations.module";
+// import {UserManagementModule} from "../trucktransport/user-management/user-management.module";
+// import {ConfigurationsModule} from "../trucktransport/configurations/configurations.module";
 
 const Routing: Routes = [
   // {
@@ -38,35 +38,35 @@ const Routing: Routes = [
   // {
   //   path: 'types',
   //   loadChildren: () =>
-  //     import('../alliance/types.module').then(
+  //     import('../trucktransport/types.module').then(
   //       (m) => m.TypesModule
   //     ),
   // },
   {
     path: 'loads',
     loadChildren: () =>
-      import('../alliance/loads/loads.module').then(
+      import('../trucktransport/loads/loads.module').then(
         (m) => m.LoadsModule
       ),
   },
   // {
   //   path: 'drivers',
   //   loadChildren: () =>
-  //     import('../alliance/drivers.module').then(
+  //     import('../trucktransport/drivers.module').then(
   //       (m) => m.DriversModule
   //     ),
   // },
   // {
   //   path: 'users',
   //   loadChildren: () =>
-  //     import('../alliance/user-management/user-management.module').then(
+  //     import('../trucktransport/user-management/user-management.module').then(
   //       (m) => m.UserManagementModule
   //     ),
   // },
   // {
   //   path: 'configs',
   //   loadChildren: () =>
-  //     import('../alliance/configurations/configurations.module').then(
+  //     import('../trucktransport/configurations/configurations.module').then(
   //       (m) => m.ConfigurationsModule
   //     ),
   // },

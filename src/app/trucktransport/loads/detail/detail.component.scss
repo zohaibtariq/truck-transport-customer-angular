@@ -49,13 +49,13 @@ th.min-w-200px.text-end.rounded-end button.btn.btn-primary{
   padding: calc(0.45rem + 1px) calc(0.8em + 1px);
   margin-right: 5px;
 }
-button.btn.btn-primary.alliance-blue-button {
+button.btn.btn-primary.trucktransport-blue-button {
   background: #D9F1FF;
   color: #38B3F9;
 }
-button.btn.btn-primary.alliance-blue-button:focus,
-button.btn.btn-primary.alliance-blue-button:active,
-button.btn.btn-primary.alliance-blue-button:hover {
+button.btn.btn-primary.trucktransport-blue-button:focus,
+button.btn.btn-primary.trucktransport-blue-button:active,
+button.btn.btn-primary.trucktransport-blue-button:hover {
   color: #FFF;
 }
 .detail-page{
@@ -304,10 +304,10 @@ ul.driver-assigned-status{
 .summary-edit:hover{
   color: navy;
 }
-.btn.btn-primary.alliance-yellow-button {
+.btn.btn-primary.trucktransport-yellow-button {
   background-color: #ffb041 !important;
 }
-.btn.btn-primary.alliance-yellow-button:hover:not(.btn-active){
+.btn.btn-primary.trucktransport-yellow-button:hover:not(.btn-active){
   background-color: #c97a06 !important;
 }
 .interested-drivers-wrap{
@@ -336,7 +336,7 @@ ul.driver-assigned-status{
         width: 50%;
       }
     }
-    button.btn.btn-primary.alliance-yellow-button.interested-drivers-btn {
+    button.btn.btn-primary.trucktransport-yellow-button.interested-drivers-btn {
       width: auto;
       padding: 5px 30px !important;
     }

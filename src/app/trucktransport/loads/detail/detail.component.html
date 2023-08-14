@@ -32,7 +32,7 @@
       <!--<div class="my-0">
         <button
           *ngIf="load?.status === 'tender'"
-          class="btn btn-primary alliance-yellow-button"
+          class="btn btn-primary trucktransport-yellow-button"
           type="button"
           data-kt-element="send"
           (click)="openInterestedDrivers(invitedDriverModal)"
@@ -43,7 +43,7 @@
         &nbsp;&nbsp;&nbsp;
         <button
           *ngIf="load?.status === 'pending'"
-          class="btn btn-primary alliance-yellow-button"
+          class="btn btn-primary trucktransport-yellow-button"
           type="button"
           data-kt-element="send"
           (click)="tenderClicked(load)"
@@ -52,7 +52,7 @@
         </button>
         &nbsp;&nbsp;&nbsp;
         <button
-          class="btn btn-primary alliance-blue-button"
+          class="btn btn-primary trucktransport-blue-button"
           type="button"
           data-kt-element="send"
           (click)="open(mymodal)"
@@ -296,7 +296,7 @@
                     <th class="min-w-150px text-uppercase">value</th>
                     <th class="min-w-200px text-end rounded-end">
                       <!--<button
-                        class="btn btn-primary alliance-blue-button"
+                        class="btn btn-primary trucktransport-blue-button"
                         type="button"
                         data-kt-element="send"
                         (click)="open(createGoodsModal)"
@@ -439,7 +439,7 @@
                         <th class="text-uppercase">PTD | BTC</th>
                         <th class="text-end rounded-end" style="padding-right: 10px !important">
                           <!--<button
-                            class="btn btn-primary alliance-blue-button"
+                            class="btn btn-primary trucktransport-blue-button"
                             type="button"
                             data-kt-element="send"
                             (click)="open(createChargesModal)"
@@ -670,7 +670,7 @@
                 <span class="driver-name text-capitalize"><b>Driver Name: </b> {{interestedDrive?.id?.first_name}} {{interestedDrive?.id?.last_name}}</span>
                 <span class="driver-rate-per-mile text-capitalize"><b>Rate Per Mile: </b> {{interestedDrive?.id?.ratePerMile.toFixed(2)}}</span>
               </label>
-              <button class="btn btn-primary alliance-yellow-button interested-drivers-btn" type="button" (click)="interestedDriverInvited(interestedDrive)">Invite</button>
+              <button class="btn btn-primary trucktransport-yellow-button interested-drivers-btn" type="button" (click)="interestedDriverInvited(interestedDrive)">Invite</button>
             </div>
           </div>
         </div>

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "alliance": {
+    "trucktransport": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/alliance",
+            "outputPath": "dist/trucktransport",
             "allowedCommonJsDependencies": [
               "object-path",
               "apexcharts",
@@ -101,13 +101,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "alliance:build:production"
+              "browserTarget": "trucktransport:build:production"
             },
             "staging": {
-              "browserTarget": "alliance:build:staging"
+              "browserTarget": "trucktransport:build:staging"
             },
             "development": {
-              "browserTarget": "alliance:build:development"
+              "browserTarget": "trucktransport:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -115,7 +115,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "alliance:build"
+            "browserTarget": "trucktransport:build"
           }
         },
         "test": {
@@ -148,7 +148,7 @@
       }
     }
   },
-  "defaultProject": "alliance",
+  "defaultProject": "trucktransport",
   "cli": {
     "defaultCollection": "@angular-eslint/schematics"
   }

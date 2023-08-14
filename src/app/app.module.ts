@@ -15,11 +15,11 @@ import { environment } from 'src/environments/environment';
 
 // #fake-start#
 import { FakeAPIService } from './_fake';
-// import {TypesService} from "./alliance/types/services/types.service";
-import {DropdownMenusModule} from "./alliance/theme/dropdown-menus/dropdown-menus.module";
+// import {TypesService} from "./trucktransport/types/services/types.service";
+import {DropdownMenusModule} from "./trucktransport/theme/dropdown-menus/dropdown-menus.module";
 import {TitleCasePipe} from "@angular/common";
 // #fake-end#
-// import {TypesService} from "./alliance/types/services/types.service";
+// import {TypesService} from "./trucktransport/types/services/types.service";
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import {HeaderInterceptor} from "./interceptors/header.interceptor";

@@ -4,12 +4,12 @@
 const ports = {
   admin: 4200,
   customer: 4201,
-  api: 3001,
+  api: 3000,
 };
-const serverIPDomain = 'localhost';
+const serverIPDomain = '127.0.0.1';
 const apiPathWithPort = 'http://' + serverIPDomain + ':' + ports.api + '/';
 export const environment = {
-  production: false,
+  production: true,
   appVersion: 'v1.0.0',
   USERDATA_KEY: 'auths3cr3tAll!@nc3UD@atm',
   isMockEnabled: false,
@@ -17,3 +17,12 @@ export const environment = {
   apiServerPath: apiPathWithPort + 'uploads/',
   maxLimit: 1000,
 };
+
+/*
+ * For easier debugging in development mode, you can import the following file
+ * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
+ *
+ * This import should be commented out in production mode because it will have a negative impact
+ * on performance if an error is thrown.
+ */
+// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
